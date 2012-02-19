@@ -1,0 +1,130 @@
+<?php
+
+abstract class AbstractForm {
+
+    private $formAttributes = array();
+
+    /**
+     * Associative array storing field label (readable field name to render),
+     * form field object, and validation errors array
+     * The key is the field name described in the model class
+     * @var array
+     */
+    protected $formFields = array();
+    //private $excludedFields = array();
+    protected $postData = array();
+    protected $nonFieldsError = "";
+
+    function __construct($postData) {
+        $this->postData = $postData;
+        $this->setFormFields();
+        $this->setFieldsAttributes();
+        $this->excludeFields();
+        $this->setFormAttributes();
+        $this->mapData($postData);
+    }
+
+    protected function mapData($postData) {
+        foreach ($postData as $key => $value) {
+            if (array_key_exists($key, $this->formFields)) {
+                $postFeeding = true;
+                $this->formFields[$key]->setValue($value, $postFeeding);
+            }
+        }
+    }
+
+    public function renderFormAttributes() {
+        $out = "";
+        foreach ($this->formAttributes as $key => $value) {
+            $out .= $key . '="' . $value . '" ';
+        }
+        return $out;
+    }
+
+    public function renderAsP() {
+        $out = "";
+        foreach ($this->formFields as $fieldObj) {
+            //if (!in_array($fieldObj->getAttribute('name'), $this->excludedFields))
+            $out .= $fieldObj->renderAsP();
+        }
+        return $out;
+    }
+
+    protected function excludeFields() {
+        
+    }
+
+    protected function exculdeField($fieldName) {
+        //$this->excludedFields[] = $fieldName;
+        unset($this->formFields[$fieldName]);
+    }
+
+    protected function setFormAttributes() {
+        //$this->formAttributes['accept-charset'] = 'UTF-8';
+        $this->formAttributes['action'] = '';
+        //$this->formAttributes['enctype'] = 'text/plain';
+        $this->formAttributes['method'] = 'post';
+        foreach ($this->formFields as $name => $field) {
+            if ($field->getTagType() == "input" &&
+                    $field->getAttribute('type') == "file")
+                $this->setFormAttribute("enctype", "multipart/form-data");
+        }
+    }
+
+    protected function setFieldAttribute($fieldName, $key, $value) {
+        $this->formFields[$fieldName]->setAttribute($key, $value);
+    }
+
+    public function setFormAttribute($key, $value) {
+        $this->formAttributes[$key] = $value;
+    }
+
+    abstract protected function setFormFields();
+
+    protected function addFormField($field, $after = null) {
+        if (!is_null($after)) {
+            $in = array($field->getAttribute('name') => $field);
+            $this->formFields = array_push_after($this->formFields, $in, $after);
+        } else {
+            $this->formFields[$field->getAttribute('name')] = $field;
+        }
+    }
+
+    protected function setFieldsAttributes() {
+        foreach ($this->formFields as $field) {
+            $field->setStaticAttributes();
+        }
+    }
+
+    public function getField($key) {
+        return $this->formFields[$key];
+    }
+
+    // TODO
+    public function isValid() {
+        $valid = true;
+        foreach ($this->formFields as $key => $fieldObj) {
+            if (!$fieldObj->isValid()) {
+                $valid = false;
+            }
+        }
+        if ($valid) {
+            try {
+                $this->validate();
+            } catch (Exception $e) {
+                $this->nonFieldsError = $e->getMessage();
+                $valid = false;
+            }
+        }
+        return $valid;
+    }
+
+    protected function validate() {
+        return true;
+    }
+
+    public function renderNonFieldsError() {
+        return $this->nonFieldsError;
+    }
+
+}
