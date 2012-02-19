@@ -128,4 +128,9 @@ function caseSwitchToSpaces($stringVariableName) {
     $replacement = ' ${1}';
     return preg_replace($pattern, $replacement, $stringVariableName);
 }
+function caseSwitchToUnderScore($stringVariableName) {
+    $pattern = '/([A-Z])/';
+    $replacement = '_${1}';
+    return substr(strtolower(preg_replace($pattern, $replacement, $stringVariableName)),1);
+}
 

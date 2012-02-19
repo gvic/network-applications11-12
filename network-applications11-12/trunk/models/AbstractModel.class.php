@@ -74,7 +74,7 @@ abstract class AbstractModel {
         $this->queryBuilder = new QueryBuilder();
         $this->instantiateFields();
         $this->modelName = get_called_class();
-        $this->tableName = strtolower($this->modelName);
+        $this->tableName = caseSwitchToUnderScore($this->modelName);
     }
 
     /**
