@@ -12,7 +12,7 @@ include 'topnav.php';
             </h2>
 
             <?php
-            if ($d['displayForm']) {
+            if ($d['form']) {
                 $errors = $d['form']->renderNonFieldsError();
                 if ($errors)
                     echo '<div class="error">' . $errors . '</div>';

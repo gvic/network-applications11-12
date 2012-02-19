@@ -15,8 +15,7 @@ include 'topnav.php';
                 <li><a href="?c=MyAccountDetails">Change my account details</a></li>
                 <li><a href="?c=ManageMyPicture">Manage my pictures</a></li>
             </ul>
-
-
+            
         </div>
         <div id="highlights">
             <ul>

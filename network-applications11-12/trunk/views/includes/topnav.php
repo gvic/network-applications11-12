@@ -10,7 +10,7 @@
             <div id="topbarnav">
                 <span class="topnavitems">
                     <?php if ($d['isAuth']) { ?>
-                        <a href="?c=MyAccount">Register</a>
+                        <a href="?c=MyAccount">My Account</a>
                     <?php } else {
                         ?>
                         <a href="?c=Register">Register</a>

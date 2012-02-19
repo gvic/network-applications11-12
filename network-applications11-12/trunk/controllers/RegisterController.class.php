@@ -17,19 +17,16 @@ class RegisterController extends AbstractController {
     protected function action() {
         $userForm = new UserForm($this->request['POST']);
         $this->d['form'] = $userForm;
-        $this->d['displayForm'] = true;
         if ($this->request['POST']) {
             if ($userForm->isValid()) {
                 $mess = $this->getModule('Messages');
-                $this->d['displayForm'] = false;
                 try {
                     $userForm->save();
                     $mess->addInfoMessage("Your account has been created.");
                     return $this->redirectTo("Index", 
                             array('Messages' => $mess->getMessages()));
                 } catch (DuplicateEntryException $e) {
-                    $this->d['displayForm'] = true;
-
+                    // TODO : make the message more adapted to this context
                     $mess->addErrorMessage($e->getMessage());
                 }
             }

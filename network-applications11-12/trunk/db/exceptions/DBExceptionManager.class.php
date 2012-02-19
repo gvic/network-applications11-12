@@ -14,8 +14,7 @@ class DBExceptionManager{
 	public function throwException($errno,$err){
 		if(array_key_exists($errno,$this->errorMapping)){
 			$ex = new $this->errorMapping[$errno];
-			$ex->setMessage($err);
-			throw new $ex;
+			throw $ex;
 		}
 		echo "Mapping failed during exception managment. Original mysql error: ";
 		die(mysql_error().". ERROR CODE: ".mysql_errno());

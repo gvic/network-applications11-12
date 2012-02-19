@@ -1,7 +1,11 @@
 <?php
-
 // We start the session in order to deal with the super global $_SESSION
 session_start();
+
+$DEBUG = true;
+$errLevel = ($DEBUG) ? E_ALL:E_ERROR;
+error_reporting($errLevel);
+
 
 // We load the settings
 require_once 'conf/settings.php';
