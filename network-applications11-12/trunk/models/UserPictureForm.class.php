@@ -1,17 +1,22 @@
 <?php
+
+require_once 'forms/AbstractModelForm.class.php';
+
 class UserPictureForm extends AbstractModelForm {
 
-    function __construct($postData) {
-        $this->modelClassName = "UserPicture";
-        parent::__construct($postData);
-    }
 
+    protected function setFieldsAttributes() {
+        parent::setFieldsAttributes();
+        $this->setFieldAttribute('path', 'label', 'File');
+    }
+    
     protected function excludeFields() {
         $this->exculdeField('user');
+        $this->exculdeField('thumbnail_path');
     }
 
-    protected function hookSetFieldsAttributes(){
-        $this->formFields['image_name']->setValue('hello');
+    protected function setModelClassName() {
+        $this->modelClassName = "UserPicture";
     }
 
 

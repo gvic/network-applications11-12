@@ -13,9 +13,9 @@ class ForeignKeyFieldForm extends AbstractFieldForm {
         $this->validator = new ForeignKeyFieldValidator();
     }
     
-    public function setAttributes(array $attrs) {
-        parent::setAttributes($attrs);
-        if(!array_key_exists('required', $attrs)) {
+    public function setAttributes($fieldObj) {
+        parent::setAttributes($fieldObj);
+        if(!$fieldObj->getAttribute('required')) {
             $this->options[] = array(
                     'index'=>0,
                     'value'=>null,

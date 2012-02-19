@@ -4,43 +4,43 @@
         <div id="previews"> Recently Uploaded <br /><br />
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/1.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/2.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/3.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/4.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/2.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/1.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>
             <div class="item">
                 <a href="#">
-                    <img alt="Photo 1" src="images/3.jpg">
+                    <img alt="Photo 1" src="">
                 </a>
                 <span class="caption">Image Caption</span>
             </div>

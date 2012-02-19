@@ -11,7 +11,6 @@ abstract class AbstractForm {
      * @var array
      */
     protected $formFields = array();
-    //private $excludedFields = array();
     protected $data = array();
     protected $nonFieldsError = "";
 
@@ -43,8 +42,9 @@ abstract class AbstractForm {
 
     public function renderAsP() {
         $out = "";
+        $i = 0;
         foreach ($this->formFields as $fieldObj) {
-            //if (!in_array($fieldObj->getAttribute('name'), $this->excludedFields))
+            $fieldObj->setAttribute('tabindex', $i++);
             $out .= $fieldObj->renderAsP();
         }
         return $out;
@@ -55,7 +55,6 @@ abstract class AbstractForm {
     }
 
     protected function exculdeField($fieldName) {
-        //$this->excludedFields[] = $fieldName;
         unset($this->formFields[$fieldName]);
     }
 
@@ -91,6 +90,7 @@ abstract class AbstractForm {
     }
 
     protected function setFieldsAttributes() {
+        $i = 0;
         foreach ($this->formFields as $key => $field) {
             $field->setStaticAttributes();
             if (array_key_exists($key, $this->data)) {
@@ -103,7 +103,6 @@ abstract class AbstractForm {
         return $this->formFields[$key];
     }
 
-    // TODO
     public function isValid() {
         $valid = true;
         foreach ($this->formFields as $key => $fieldObj) {
