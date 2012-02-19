@@ -19,11 +19,11 @@ class DoubleFieldValidator extends AbstractValidator {
 
     protected function validateType() {
         if (!is_numeric($this->value))
-            throw new InvalidTypeException($this->readableName, $this->value);
+            throw new InvalidTypeException($this->value);
 
         $this->value = (double) $this->value;
         if (!is_double($this->value))
-            throw new InvalidTypeException($this->readableName, $this->value);
+            throw new InvalidTypeException($this->value);
     }
 
     protected function validateValue() {

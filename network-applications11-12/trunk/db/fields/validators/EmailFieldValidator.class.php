@@ -20,7 +20,7 @@ class EmailFieldValidator extends TextFieldValidator {
     protected function validateValue() {
         parent::validateValue();
         if (!filter_var($this->value, FILTER_VALIDATE_EMAIL))
-            throw new InvalidValueException($this->readableName, $this->value);
+            throw new InvalidValueException($this->value);
     }
 
 }

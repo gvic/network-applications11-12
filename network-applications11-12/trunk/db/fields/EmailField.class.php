@@ -7,8 +7,6 @@ class EmailField extends TextField{
 
     function __construct() {
         parent::__construct();
-        $this->validator = new EmailFieldValidator();
-        $this->validator->setConstraint('max_length',255);
     }
 
     

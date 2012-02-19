@@ -8,6 +8,5 @@ class PositiveIntegerField extends IntegerField {
 
     function __construct() {
         parent::__construct();
-        $this->validator = new PositiveIntegerFieldValidator();
     }
 }

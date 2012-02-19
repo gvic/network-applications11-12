@@ -3,7 +3,7 @@
 session_start();
 
 $DEBUG = true;
-$errLevel = ($DEBUG) ? E_ALL:E_ERROR;
+$errLevel = ($DEBUG) ? E_ALL : E_ERROR;
 error_reporting($errLevel);
 
 

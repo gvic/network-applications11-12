@@ -7,7 +7,6 @@ class BooleanField extends AbstractField {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new BooleanFieldValidator();
     }
     
     
@@ -24,5 +23,4 @@ class BooleanField extends AbstractField {
     public function getDBType() {
         return 'boolean';
     }
-
 }

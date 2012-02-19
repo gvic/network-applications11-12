@@ -8,7 +8,6 @@ class FileField extends TextField{
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new FileFieldValidator();
     }
 
 

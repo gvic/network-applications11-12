@@ -11,8 +11,6 @@ class PasswordField extends TextField {
 
     function __construct() {
         parent::__construct();
-        $this->validator = new PasswordFieldValidator();
-        $this->validator->setConstraint('max_length', 255);
     }
 
 

@@ -8,7 +8,7 @@ class User extends AbstractModel{
 		'email'			=> array('class' => 'EmailField','unique'=>true),
 		'password' 		=> array('class' => 'PasswordField',),
 		'validated'		=> array('class' => 'BooleanField','default_value'=>false),
-		'created_at'	=> array('class' => 'DateField',),
+		'created_at'            => array('class' => 'DateField',),
 	);
 
 	protected $uniqueness = array('login','email');

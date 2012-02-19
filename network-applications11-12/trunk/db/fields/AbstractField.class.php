@@ -1,5 +1,7 @@
 <?php
+
 require_once 'utils/utils.php';
+
 /**
  *
  * No database back-end selection available yet...
@@ -14,7 +16,6 @@ abstract class AbstractField {
     protected $value;
     protected $validator;
 
-
     public function __construct() {
         $this->attributes = array(
             'primary_key' => false,
@@ -27,9 +28,12 @@ abstract class AbstractField {
             'related_model' => null,
             'related_model_instance' => null,
         );
-        $this->value = null;        
+        $this->value = null;
+        $class = get_called_class()."Validator";
+        require_once 'db/fields/validators/'.$class.'.class.php';
+        $this->validator = new $class;
     }
-    
+
     abstract public function getDBType();
 
     public function setAttribute($key, $value) {
@@ -38,14 +42,12 @@ abstract class AbstractField {
 
     public function setAttributes($fieldName, array $attrs) {
         $this->name = $fieldName;
-        $this->validator->setFieldName($fieldName);
 
-        if (array_key_exists('readable_name', $attrs) && !is_null($attrs['readable_name'])) {
+        if (array_key_exists('readable_name', $attrs) && strlen($attrs['readable_name'])>0) {
             $this->attributes['readable_name'] = $attrs['readable_name'];
         } else {
             $this->attributes['readable_name'] = slug_to_readable($this->name);
         }
-        $this->validator->setReadableName($this->attributes['readable_name']);
 
         // others params not mandatory
         if (array_key_exists('auto_increment', $attrs)) {
@@ -60,7 +62,7 @@ abstract class AbstractField {
         }
         if (array_key_exists('required', $attrs)) {
             $this->attributes['required'] = $attrs['required'];
-            $this->validator->setConstraint('required',$attrs['required']);
+            $this->validator->setConstraint('required', $attrs['required']);
         }
         if (array_key_exists('unique', $attrs)) {
             $this->attributes['unique'] = $attrs['unique'];
@@ -84,17 +86,9 @@ abstract class AbstractField {
         $this->setValue($this->attributes['default_value']);
     }
 
-    public function escape() {
-        if (!is_null($this->value) && !is_numeric($this->value))
-            $this->value = trim(mysql_escape_string($this->value));
-        if (!is_null($this->attributes['default_value']) && !is_numeric($this->attributes['default_value']))
-            $this->attributes['default_value'] = mysql_escape_string($this->attributes['default_value']);
-    }
-
     public function clean() {
-        if (!$this->attributes['auto_increment']){
+        if (!$this->attributes['auto_increment']) {
             $this->validator->validate();
-            $this->escape();
         }
     }
 
@@ -109,8 +103,8 @@ abstract class AbstractField {
     public function __toString() {
         return $this->name . " ";
     }
-    
-    public function getValidator(){
+
+    public function getValidator() {
         return $this->validator;
     }
 

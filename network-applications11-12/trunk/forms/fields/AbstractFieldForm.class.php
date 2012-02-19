@@ -1,6 +1,9 @@
 <?php
 
 require_once 'utils/utils.php';
+require_once 'db/fields/exceptions/InvalidValueException.class.php';
+require_once 'db/fields/exceptions/RequiredFieldException.class.php';
+require_once 'db/fields/exceptions/InvalidTypeException.class.php';
 
 /**
  * Enter description here ...
@@ -24,12 +27,13 @@ abstract class AbstractFieldForm {
 
     public function __construct() {
         $this->attrs['name'] = '';
+        $class = substr(get_called_class(),0,-4)."Validator";
+        require_once 'db/fields/validators/'.$class.'.class.php';
+        $this->validator = new $class;
     }
 
     public function setLabel($v) {
         $this->attrs['label'] = $v;
-        $this->validator->setFieldName($v);
-        $this->validator->setReadableName($v);
         if (strlen($this->attrs['name']) == 0) {
             $this->setName(slugify($v));
         }
@@ -55,11 +59,6 @@ abstract class AbstractFieldForm {
 
     public function setValidator($v) {
         $this->validator = $v;
-        if (array_key_exists('name', $this->attrs))
-            $this->validator->setFieldName($this->attrs['name']);
-        else {
-            throw new Exception("There is no name to attach to the validator");
-        }
     }
 
     /*
@@ -75,15 +74,12 @@ abstract class AbstractFieldForm {
      * HTML5 support for required attribute
      * @param array $attrs
      */
-    public function setAttributes(array $attrs) {
-        if (array_key_exists('required', $attrs) && $attrs['required']) {
-            $this->attrs['required'] = 'required';
-        }
-        if (array_key_exists('value', $attrs) && strlen($attrs['value']) > 0) {
-            $this->setValue($attrs['value']);
-        } else if (array_key_exists('default_value', $attrs)) {
-            $this->setValue($attrs['default_value']);
-        }
+    public function setAttributes($modelField) {
+
+        if ($modelField->getAttribute('required'))
+        //    $this->attrs['required'] = 'required';
+        $this->setValue($modelField->getValue());
+        $this->setLabel($modelField->getAttribute('readable_name'));
     }
 
     public function setAttribute($key, $value) {

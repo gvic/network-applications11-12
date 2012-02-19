@@ -19,12 +19,12 @@ class IntegerFieldValidator extends AbstractValidator {
 
     protected function validateType() {
         if (!is_int($this->value))
-            throw new InvalidTypeException($this->readableName);
+            throw new InvalidTypeException($this->value);
     }
 
     protected function validateValue() {
         if(!($this->value >= -2147483648 && $this->value <= 2147483647))
-            throw new InvalidValueException($this->readableName,  $this->value);
+            throw new InvalidValueException($this->value);
     }
 
 }

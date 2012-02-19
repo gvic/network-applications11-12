@@ -11,17 +11,6 @@ class TextAreaFieldForm extends AbstractFieldForm {
         $this->validator = new TextAreaFieldValidator();
     }
 
-    public function setAttributes(array $attrs) {
-        parent::setAttributes($attrs);
-
-        if (array_key_exists('cols', $attrs)) {
-            $this->attrs['cols'] = $attrs['cols'];
-        }
-
-        if (array_key_exists('rows', $attrs)) {
-            $this->attrs['rows'] = $attrs['rows'];
-        }
-    }
 
     public function getTagType() {
         return 'textarea';

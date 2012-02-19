@@ -7,7 +7,6 @@ class IntegerField extends AbstractField {
 
     function __construct() {
         parent::__construct();
-        $this->validator = new IntegerFieldValidator();
     }
 
     public function getDBType() {

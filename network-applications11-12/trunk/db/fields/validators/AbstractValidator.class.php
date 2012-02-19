@@ -12,26 +12,11 @@ require_once 'utils/utils.php';
  */
 abstract class AbstractValidator {
 
-    protected $fieldName;
-    protected $readableName;
     protected $value;
     protected $constraints;
     
     public function __construct() {
         $this->constraints = array('required'=>true);
-    }
-
-    public function setFieldName($v) {
-        $this->fieldName = $v;
-        $this->readableName = slug_to_readable($v);
-    }
-    
-    public function setReadableName($v){
-        $this->readableName = $v;
-    }
-    
-    public function getReadableName(){
-        return $this->readableName;
     }
 
     public function setConstraint($key, $val) {
@@ -54,7 +39,7 @@ abstract class AbstractValidator {
         if (array_key_exists('required', $this->constraints) &&
                 $this->constraints['required']) {
             if (is_null($this->value) || ( is_string($this->value) && strlen($this->value) == 0)) {
-                throw new RequiredFieldException($this->readableName);
+                throw new RequiredFieldException();
             }
         }
     }

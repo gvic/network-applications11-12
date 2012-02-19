@@ -7,7 +7,6 @@ class DoubleField extends AbstractField {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new DoubleFieldValidator();
     }
    
     public function getDBType() {

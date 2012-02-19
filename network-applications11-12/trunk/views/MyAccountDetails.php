@@ -8,7 +8,7 @@ include 'topnav.php';
         <div class="clear"></div>
         <div id="homecontents" style="width: 679px">
             <h2>
-                Register Form
+                <?php echo $d['title']; ?>
             </h2>
 
             <?php

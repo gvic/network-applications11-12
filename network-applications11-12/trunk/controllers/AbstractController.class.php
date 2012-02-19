@@ -8,9 +8,6 @@ abstract class AbstractController {
     protected $request;
     // arrays filled with clean data for sql statment
     // when clean<token> method is called.
-    protected $cookieCleaned;
-    protected $getCleaned;
-    protected $postCleaned;
     // array containing the object modules loaded.
     protected $modules;
     // template variable
@@ -18,9 +15,6 @@ abstract class AbstractController {
 
     function __construct() {
         $this->request = array();
-        $this->cookieCleaned = array();
-        $this->getCleaned = array();
-        $this->postCleaned = array();
         $this->modules = array();
         $this->d = array();
     }
@@ -67,47 +61,7 @@ abstract class AbstractController {
         }
     }
 
-    // Wrapper for the cleadData method
-    protected final function cleanPost($constraint = array('all' => 'required')) {
-        $this->postCleaned = $this->cleanDatas($this->request['POST'], $constraint);
-        return $this->postCleaned;
-    }
-
-    // Wrapper for the cleadData method
-    protected final function cleanGet($constraint = array('all' => 'required')) {
-        $this->getCleaned = $this->cleanDatas($this->request['GET'], $constraint);
-        return $this->getCleaned;
-    }
-
-    // Wrapper for the cleadData method
-    protected final function cleanCookie($constraint = array('all' => 'required')) {
-        $this->cookieCleaned = $this->cleanDatas($this->request['COOKIE'], $constraint);
-        return $this->cookieCleaned;
-    }
-
-    // Clean data in order to make them ready to be stored in a database
-    // through a sql statment.
-    // A very restraint constraint feature is allowed to be passed in parameter
-    // Concretly it only allows to put a 'required' constraint on every element
-    // of the array iterated
-    protected function cleanDatas($arr, $constraint) {
-        foreach ($arr as $key => $value) {
-            if (get_magic_quotes_gpc()) {
-                $value = stripslashes($value);
-            }
-//            if (!is_numeric($value)) {
-//                $value = mysql_real_escape_string($value);
-//            }
-            $value = trim($value);
-            if ($value == "" && array_key_exists('all', $constraint) &&
-                    $constraint['all'] == 'required') {
-                throw new Exception("All the fields are required");
-            }
-            $arr[$key] = $value;
-        }
-        return $arr;
-    }
-
+    
     // Instantiate a module according the naming standard
     // from a given module name
     // Also execute the startHook 
@@ -168,10 +122,10 @@ abstract class AbstractController {
     // as argument of the function.
     public function renderToTemplate($template = null) {
         $d = $this->d;
-        if ($template == null) {
-            $template = $this->request['GET']['c'] . '.php';
+        if (is_null($template)) {
+            $template = $this->request['GET']['c'] ;
         }
-        require_once "views/$template";
+        require_once "views/$template.php";
     }
 
     // Redirect from the current url to the 

@@ -25,7 +25,7 @@ class TextFieldValidator extends AbstractValidator {
     protected function validateValue() {
         $n = strlen($this->value);
         if($n > $this->constraints['max_length']){
-            throw new InvalidValueException($this->readableName,  $this->value);
+            throw new InvalidValueException($this->value);
         }
     }
 

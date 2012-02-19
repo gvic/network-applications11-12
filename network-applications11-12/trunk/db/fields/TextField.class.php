@@ -8,7 +8,7 @@ class TextField extends AbstractField {
 
     function __construct() {
         parent::__construct();
-        $this->validator = new TextFieldValidator();
+        $this->attributes['max_length'] = $this->validator->getConstraint('max_length');
     }
    
     public function getDBType() {

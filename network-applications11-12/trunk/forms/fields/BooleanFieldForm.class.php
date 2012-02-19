@@ -13,24 +13,19 @@ class BooleanFieldForm extends AbstractFieldForm {
         $this->validator = new BooleanFieldValidator();
     }
 
-    public function setAttributes(array $attrs) {
-        parent::setAttributes($attrs);
-        if (array_key_exists('default_value', $attrs) && $attrs['default_value']) {
+    public function setAttributes($modelField) {
+        parent::setAttributes($modelField);
+        if ($modelField->getAttribute('default_value')) {
             $this->attrs['checked'] = 'checked';
         }
         $this->setValue($this->getAttribute('name'));
     }
-    
+
     public function setValue($val) {
         parent::setValue($val);
-        if($this->value){
+        if ($this->value) {
             $this->attrs['checked'] = 'checked';
         }
-    }
-
-    public function setLabel($v) {
-        parent::setLabel($v);
-        $this->validator->setReadableName("");
     }
 
     public function getTagType() {

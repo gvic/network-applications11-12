@@ -23,7 +23,7 @@ class PasswordFieldValidator extends TextFieldValidator {
 
         if ($n < 6) {
             $message = "Your password should be composed with more than 5 characters";
-            throw new InvalidValueException($this->readableName, $this->value, $message);
+            throw new InvalidValueException($this->value, null, $message);
         }
     }
 

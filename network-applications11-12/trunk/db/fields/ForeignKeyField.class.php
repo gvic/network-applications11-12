@@ -7,7 +7,6 @@ class ForeignKeyField extends PositiveIntegerField{
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new ForeignKeyFieldValidator();
     }
 
     public function setAttributes($fieldName, array $attrs) {

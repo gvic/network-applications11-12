@@ -15,6 +15,9 @@ require_once 'db/exceptions/DuplicateEntryException.class.php';
 class RegisterController extends AbstractController {
 
     protected function action() {
+        $mod = $this->getModule('Auth');
+        if($mod->isAuth())
+            return $this->redirectTo ('MyAccountDetails');
         $userForm = new RegisterForm($this->request['POST']);
         $this->d['form'] = $userForm;
         if ($this->request['POST']) {

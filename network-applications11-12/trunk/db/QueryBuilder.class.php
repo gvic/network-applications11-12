@@ -53,8 +53,8 @@ class QueryBuilder {
     }
 
     public function escape($val) {
-        $ret = $val;
-        if (!is_numeric($val)) {
+        $ret = trim($val);
+        if (!get_magic_quotes_gpc()) {
             $ret = mysql_real_escape_string($val);
         }
         return $ret;
@@ -76,7 +76,8 @@ class QueryBuilder {
         $n = count($phpFieldObjects);
         $i = 0;
         $tmp = array();
-        $pks = array(); $uniqFieldsClauses = array();
+        $pks = array();
+        $uniqFieldsClauses = array();
         foreach ($phpFieldObjects as $fieldName => $fieldObj) {
             $this->checkFieldName($fieldName);
             $ttmp = "`" . $fieldObj->getName() . "` " . $fieldObj->getDBType() . " ";
@@ -113,9 +114,9 @@ class QueryBuilder {
             if ($fieldObj->getAttribute('primary_key')) {
                 $pks[] = $fieldObj->getName();
             }
-            
+
             if ($fieldObj->getAttribute('unique')) {
-                $uniqFieldsClauses[] = "UNIQUE (".$fieldObj->getName().")";
+                $uniqFieldsClauses[] = "UNIQUE (" . $fieldObj->getName() . ")";
             }
 
             $tmp[] = $ttmp;
@@ -127,7 +128,7 @@ class QueryBuilder {
         if ($n > 0) {
             $this->buffer .= ", PRIMARY KEY (" . flat_array($pks, ",") . ")";
         }
-        
+
         $n = count($uniqFieldsClauses);
         if ($n > 0) {
             $this->buffer .= ", " . flat_array($uniqFieldsClauses, ",");

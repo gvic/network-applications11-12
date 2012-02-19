@@ -8,14 +8,11 @@ class TextFieldForm extends AbstractFieldForm {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new TextFieldValidator();
     }
     
-    public function setAttributes(array $attrs) {
-        parent::setAttributes($attrs);
-        if (array_key_exists('max_length', $attrs)) {
-            $this->attrs['maxlength'] = $attrs['max_length'];
-        }
+    public function setAttributes($modelField) {
+        parent::setAttributes($modelField);
+        $this->attrs['maxlength'] = $modelField->getAttribute('max_length');        
     }
 
     public function getTagType() {

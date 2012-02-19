@@ -98,8 +98,8 @@ abstract class AbstractModel {
     public function getFields() {
         return $this->fields;
     }
-    
-    public function getFieldsObjects(){
+
+    public function getFieldsObjects() {
         return $this->fieldObjects;
     }
 
@@ -127,6 +127,14 @@ abstract class AbstractModel {
             throw new Exception("Can't get a value from multiple entries", 0);
         if ($n == 0)
             throw new Exception("Can't get a value from no entry", 0);
+    }
+
+    public function getValues() {
+        $ret = array();
+        foreach ($this->fieldObjects as $key => $fieldObj) {
+            $ret[$key] = $this->getValue($key);
+        }
+        return $ret;
     }
 
     public function getValue($fieldName) {
@@ -192,11 +200,11 @@ abstract class AbstractModel {
         $this->db->setStatment($stat)->executeQuery();
         return clone $this;
     }
-    
-    public function save($insert = true){
-        if($insert){
+
+    public function save($insert = true) {
+        if ($insert) {
             $this->queryBuilder->insert($this->tableName, $this->fieldObjects);
-        }else{
+        } else {
             $this->queryBuilder->update($this->tableName, $this->fieldObjects);
         }
         $stat = $this->queryBuilder->getStatment();

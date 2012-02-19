@@ -15,13 +15,14 @@ class DateFieldValidator extends AbstractValidator {
     
     public function __construct() {
         parent::__construct();
+        $this->setConstraint('max_length', 10);
     }
 
     protected function validateType() {
         try {
             $this->value = new DateTime($this->value);
         } catch (Exception $e) {
-            throw new InvalidTypeException($this->readableName);
+            throw new InvalidTypeException($this->value);
         }
     }
 

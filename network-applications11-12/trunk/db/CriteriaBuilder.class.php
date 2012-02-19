@@ -17,8 +17,8 @@ class CriteriaBuilder {
     }
 
     public function escape($val) {
-        $ret = $val;
-        if (!is_numeric($val)) {
+        $ret = trim($val);
+        if (!get_magic_quotes_gpc()) {
             $ret = mysql_real_escape_string($val);
         }
         return $ret;

@@ -3,15 +3,10 @@
 require_once 'forms/AbstractModelForm.class.php';
 require_once 'forms/fields/PasswordFieldForm.class.php';
 
-
-
 class RegisterForm extends AbstractModelForm {
 
-    protected $formAttributes;
-
-    function __construct($postData,$modelInstance = null) {
+    protected function setModelClassName() {
         $this->modelClassName = "User";
-        parent::__construct($postData,$modelInstance);
     }
 
     protected function setFieldsAttributes() {
@@ -37,9 +32,9 @@ class RegisterForm extends AbstractModelForm {
         $fieldB->setRender(false);
         $this->addFormField($fieldB);
     }
-    
+
     protected function validate() {
-        if($this->postData['password'] != $this->postData['password_confirmation'])
+        if ($this->data['password'] != $this->data['password_confirmation'])
             throw new Exception("Passwords must match !");
     }
 

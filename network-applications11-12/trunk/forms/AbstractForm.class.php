@@ -12,20 +12,20 @@ abstract class AbstractForm {
      */
     protected $formFields = array();
     //private $excludedFields = array();
-    protected $arrayData = array();
+    protected $data = array();
     protected $nonFieldsError = "";
 
-    function __construct($data) {
+    function __construct($data = array()) {
         $this->setFormFields();
-        $this->mapData($data);
+        $this->data = $data;
+        $this->mapData();
         $this->setFieldsAttributes();
         $this->excludeFields();
         $this->setFormAttributes();
     }
 
-    protected function mapData($postData) {
-        $this->arrayData = $postData;
-        foreach ($postData as $key => $value) {
+    protected function mapData() {
+        foreach ($this->data as $key => $value) {
             if (array_key_exists($key, $this->formFields)) {
                 $postFeeding = true;
                 $this->formFields[$key]->setValue($value, $postFeeding);
@@ -91,8 +91,11 @@ abstract class AbstractForm {
     }
 
     protected function setFieldsAttributes() {
-        foreach ($this->formFields as $field) {
+        foreach ($this->formFields as $key => $field) {
             $field->setStaticAttributes();
+            if (array_key_exists($key, $this->data)) {
+                $field->setValue($this->data[$key]);
+            }
         }
     }
 

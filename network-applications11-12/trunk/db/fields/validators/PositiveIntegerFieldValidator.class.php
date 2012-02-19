@@ -19,7 +19,7 @@ class PositiveIntegerFieldValidator extends IntegerFieldValidator {
     
     protected function validateValue() {
         if(!($this->value >= 0 && $this->value <= 4294967295))
-            throw new InvalidValueException($this->readableName,  $this->value);
+            throw new InvalidValueException($this->value);
     }
 
 }

@@ -10,7 +10,7 @@ class DateField extends AbstractField {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new DateFieldValidator();
+        $this->attributes['max_length'] = $this->validator->getConstraint('max_length');
     }
     
     public function escape() {
