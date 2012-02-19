@@ -4,13 +4,14 @@ require_once 'forms/AbstractModelForm.class.php';
 require_once 'forms/fields/PasswordFieldForm.class.php';
 
 
-class UserForm extends AbstractModelForm {
+
+class RegisterForm extends AbstractModelForm {
 
     protected $formAttributes;
 
-    function __construct($postData) {
+    function __construct($postData,$modelInstance = null) {
         $this->modelClassName = "User";
-        parent::__construct($postData);
+        parent::__construct($postData,$modelInstance);
     }
 
     protected function setFieldsAttributes() {

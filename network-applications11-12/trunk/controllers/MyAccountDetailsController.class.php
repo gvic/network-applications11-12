@@ -1,21 +1,20 @@
 <?php
 
-require_once 'models/RegisterForm.class.php';
+require_once 'models/User.class.php';
+require_once 'models/AccountForm.class.php';
 require_once 'db/exceptions/DuplicateEntryException.class.php';
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of RegisterContrller
  *
  * @author victorinox
  */
-class RegisterController extends AbstractController {
+class MyAccountDetailsController extends AbstractController {
 
     protected function action() {
-        $userForm = new RegisterForm($this->request['POST']);
+        $userM = new User();
+        $user = $userM->get(array('id'=>  $this->request['SESSION']['user_id']));
+        $userForm = new AccountForm(null,$user);
         $this->d['form'] = $userForm;
         if ($this->request['POST']) {
             if ($userForm->isValid()) {

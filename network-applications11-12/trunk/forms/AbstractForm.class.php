@@ -12,19 +12,19 @@ abstract class AbstractForm {
      */
     protected $formFields = array();
     //private $excludedFields = array();
-    protected $postData = array();
+    protected $arrayData = array();
     protected $nonFieldsError = "";
 
-    function __construct($postData) {
-        $this->postData = $postData;
+    function __construct($data) {
         $this->setFormFields();
+        $this->mapData($data);
         $this->setFieldsAttributes();
         $this->excludeFields();
         $this->setFormAttributes();
-        $this->mapData($postData);
     }
 
     protected function mapData($postData) {
+        $this->arrayData = $postData;
         foreach ($postData as $key => $value) {
             if (array_key_exists($key, $this->formFields)) {
                 $postFeeding = true;

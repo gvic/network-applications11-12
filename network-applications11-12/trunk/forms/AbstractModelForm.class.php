@@ -15,34 +15,50 @@ class AbstractModelForm extends AbstractForm {
      * @var string
      */
     protected $modelClassName;
-    private $modelObject;
+    private $modelInstance;
 
     public function __construct($postData, $modelInstance = null) {
         if (is_null($modelInstance)) {
             require_once 'models/' . $this->modelClassName . '.class.php';
-            $this->modelObject = new $this->modelClassName;
+            $this->modelInstance = new $this->modelClassName;
         } else {
-            $this->modelObject = $modelInstance;
+            $this->modelInstance = $modelInstance;
         }
         $this->setFormAttribute("name", $this->modelClassName . "_form");
         $this->setFormAttribute("id", $this->modelClassName . "_id");
-        parent::__construct($postData);
+
+        if (!is_null($modelInstance)) {
+            parent::__construct($modelInstance);
+        } else {
+            parent::__construct($postData);
+        }
     }
 
-    protected function mapData($postData) {
-        $modelFieldsObjects = $this->modelObject->getFieldsObjects();
-        foreach ($postData as $key => $value) {
-            if (array_key_exists($key, $this->formFields)) {
-                $this->formFields[$key]->setValue($value);
+    protected function mapData($data) {
+        if ($data instanceof AbstractModel) {
+            $modelFields = $this->modelInstance->getFieldsObjects();
+            foreach ($modelFields as $key => $fieldObj) {
+                if (array_key_exists($key, $this->formFields)) {
+                    $val = $this->modelInstance->getValue($key);
+                    $this->formFields[$key]->setValue($val);
+                    $this->arrayData[$key] = $val;
+                }
             }
-            if (array_key_exists($key, $modelFieldsObjects)) {
-                $modelFieldsObjects[$key]->setValue($value);
+        } else {
+            $modelFieldsObjects = $this->modelInstance->getFieldsObjects();
+            foreach ($data as $key => $value) {
+                if (array_key_exists($key, $this->formFields)) {
+                    $this->formFields[$key]->setValue($value);
+                }
+                if (array_key_exists($key, $modelFieldsObjects)) {
+                    $modelFieldsObjects[$key]->setValue($value);
+                }
             }
         }
     }
 
     protected function setFormFields() {
-        $fields = $this->modelObject->getFields();
+        $fields = $this->modelInstance->getFields();
         foreach ($fields as $key => $attrs) {
             if ($key != 'id') {
                 $this->loadFormField($key, $attrs);
@@ -58,8 +74,8 @@ class AbstractModelForm extends AbstractForm {
     }
 
     protected function setFieldsAttributes() {
-        $modelFields = $this->modelObject->getFields();
-        $modelFieldsObjects = $this->modelObject->getFieldsObjects();
+        $modelFields = $this->modelInstance->getFields();
+        $modelFieldsObjects = $this->modelInstance->getFieldsObjects();
         foreach ($this->formFields as $key => $field) {
 
             $field->setStaticAttributes();
@@ -79,10 +95,18 @@ class AbstractModelForm extends AbstractForm {
                 $req = $modelFieldsObjects[$key]->getAttribute('required');
                 $validator->setConstraint('required', $req);
 
-                if (array_key_exists($key, $this->postData)) {
-                    $validator->setValue($this->postData[$key]);
-                } else if (array_key_exists('default_value', $modelAttrs)) {
-                    $validator->setValue($modelAttrs['default_value']);
+                // TODO: Wrong because arrayData can be modelInstance...
+                if (!is_null($this->arrayData) &&
+                        array_key_exists($key, $this->arrayData)) {
+
+                    $validator->setValue($this->arrayData[$key]);
+                } else {
+
+                    $validator->setValue($this->modelInstance->getValue($key));
+
+//                    else if (array_key_exists('default_value', $modelAttrs)) {
+//                        $validator->setValue($modelAttrs['default_value']);
+//                    }
                 }
                 $field->setValidator($validator);
             }
@@ -90,7 +114,7 @@ class AbstractModelForm extends AbstractForm {
     }
 
     public function save() {
-        $this->modelObject->save(true);
+        $this->modelInstance->save(true);
     }
 
 }

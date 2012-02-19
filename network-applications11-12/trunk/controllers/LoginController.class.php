@@ -16,7 +16,7 @@ class LoginController extends AbstractController {
         $loginForm = new LoginForm($this->request['POST']);
         if ($this->request['POST']) {
             if ($loginForm->isValid()) {
-                $post = $this->cleanPost();
+                $post = $this->request['POST'];
                 $userModel = new User();
                 $criteria = array(
                 'login' => $post['login'],

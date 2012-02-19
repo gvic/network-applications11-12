@@ -120,7 +120,7 @@ function is_multi($a) {
 }
 
 /**
- * @param type $stringVariableName
+ * @param string $stringVariableName
  * @return string
  */
 function caseSwitchToSpaces($stringVariableName) {

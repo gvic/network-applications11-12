@@ -4,6 +4,9 @@ require_once 'utils/utils.php';
 require_once 'db/Database.class.php';
 require_once 'db/QueryBuilder.class.php';
 
+//TODO: make use of static method for get create etc... 
+// make some reading before on static usage in php and web fwk
+
 /**
  * Abstract model
  * No abstract method so far, but could occur in the future.
