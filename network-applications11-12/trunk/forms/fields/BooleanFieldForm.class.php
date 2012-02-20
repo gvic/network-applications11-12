@@ -10,7 +10,6 @@ class BooleanFieldForm extends AbstractFieldForm {
     public function __construct() {
         parent::__construct();
         BooleanFieldForm::$count = 0;
-        $this->validator = new BooleanFieldValidator();
     }
 
     public function setAttributes($modelField) {

@@ -12,6 +12,8 @@ require_once 'db/exceptions/DuplicateEntryException.class.php';
 class MyAccountDetailsController extends AbstractController {
 
     protected function action() {
+        $mod = $this->getModule('Auth');
+        $mod->checkAccess();
         $userM = new User();
         $user = $userM->get(array('id'=>  $this->request['SESSION']['user_id']));
         $userForm = new AccountForm($this->request['POST'],$user);

@@ -8,7 +8,6 @@ class PositiveIntegerFieldForm extends IntegerFieldForm {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new PositiveIntegerFieldValidator();
     }
 
 }

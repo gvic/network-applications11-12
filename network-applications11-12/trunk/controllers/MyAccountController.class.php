@@ -10,12 +10,15 @@
  *
  * @author victorinox
  */
-class MyAccountController extends AbstractController{
+class MyAccountController extends AbstractController {
+
     //put your code here
     protected function action() {
-        
+        $mod = $this->getModule('Auth');
+        $mod->checkAccess();
         return $this->renderToTemplate();
     }
+
 }
 
 ?>

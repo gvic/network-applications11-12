@@ -8,7 +8,6 @@ class PasswordFieldForm extends TextFieldForm {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new PasswordFieldValidator();
     }
     
     public function setStaticAttributes() {

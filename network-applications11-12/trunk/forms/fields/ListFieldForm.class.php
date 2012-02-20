@@ -1,9 +1,8 @@
 <?php
 require_once 'forms/fields/AbstractFieldForm.class.php';
-require_once 'db/fields/validators/ForeignKeyFieldValidator.class.php';
 
 
-class ForeignKeyFieldForm extends AbstractFieldForm {
+class ListFieldForm extends AbstractFieldForm {
 
     protected $options = array();
     protected $optionsTexts = array();
@@ -20,6 +19,11 @@ class ForeignKeyFieldForm extends AbstractFieldForm {
                     'value'=>null,
             );
             $this->optionsTexts[] = '------';
+        }
+        $list = $fieldObj->getAttribute('choices');
+        foreach ($list as $key => $value) {
+            $this->options[] = array('index'=>$key,'value'=>$value);
+            $this->optionsTexts[] = $value;
         }
     }
 

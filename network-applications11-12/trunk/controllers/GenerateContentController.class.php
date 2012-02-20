@@ -5,7 +5,6 @@ require_once 'models/UserPicture.class.php';
 class GenerateContentController extends AbstractController{
 	
 	function action(){
-		$cb = new CriteriaBuilder();
 		$user = new User();
 		$userP = new UserPicture();
 		$user->createTable();

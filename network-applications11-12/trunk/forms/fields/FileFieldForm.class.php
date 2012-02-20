@@ -8,7 +8,6 @@ class FileFieldForm extends AbstractFieldForm {
     
     public function __construct() {
         parent::__construct();
-        $this->validator = new FileFieldValidator();
     }
 
     public function getTagType() {

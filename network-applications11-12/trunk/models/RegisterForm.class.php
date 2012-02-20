@@ -16,7 +16,8 @@ class RegisterForm extends AbstractModelForm {
     }
 
     protected function excludeFields() {
-        $this->exculdeField('validated');
+        $this->exculdeField('validated', 'first_name', 'last_name', 
+                'post_code', 'address', 'city', 'country');
     }
 
     protected function setFormFields() {

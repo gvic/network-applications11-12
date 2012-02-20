@@ -8,7 +8,6 @@ class TextAreaFieldForm extends AbstractFieldForm {
     
     public function __construct() {
         parent::__construct();
-        $this->validator = new TextAreaFieldValidator();
     }
 
 

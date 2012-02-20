@@ -8,7 +8,6 @@ class DateFieldForm extends TextFieldForm {
 
     public function __construct() {
         parent::__construct();
-        $this->validator = new DateFieldValidator();
     }
 
 }

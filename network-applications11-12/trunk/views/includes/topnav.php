@@ -11,6 +11,8 @@
                 <span class="topnavitems">
                     <?php if ($d['isAuth']) { ?>
                         <a href="?c=MyAccount">My Account</a>
+                        |
+                        <a href="?c=Logout">Logout</a>
                     <?php } else {
                         ?>
                         <a href="?c=Register">Register</a>

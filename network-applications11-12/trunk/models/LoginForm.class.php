@@ -31,6 +31,10 @@ class LoginForm extends AbstractForm {
         $pwd->setLabel('Password');
         $this->addFormField($pwd);
     }
+
+    protected function validate() {
+        return true;
+    }
     
     
 

@@ -12,7 +12,7 @@ abstract class AbstractModule {
 	}
 	
 	// Hooks called before the action controller hook and after it.
-	public abstract function startHook();
-	public abstract function terminateHook();
+	abstract public function startHook();
+	abstract public function terminateHook();
 	
 }

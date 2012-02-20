@@ -54,8 +54,9 @@ abstract class AbstractForm {
         
     }
 
-    protected function exculdeField($fieldName) {
-        unset($this->formFields[$fieldName]);
+    protected function exculdeField() {
+        foreach (func_get_args() as $key => $fieldName)
+            unset($this->formFields[$fieldName]);
     }
 
     protected function setFormAttributes() {
@@ -121,9 +122,7 @@ abstract class AbstractForm {
         return $valid;
     }
 
-    protected function validate() {
-        return true;
-    }
+    abstract protected function validate();
 
     public function renderNonFieldsError() {
         return $this->nonFieldsError;

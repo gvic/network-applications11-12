@@ -45,28 +45,30 @@ abstract class AbstractField {
 
         if (array_key_exists('readable_name', $attrs) && strlen($attrs['readable_name'])>0) {
             $this->attributes['readable_name'] = $attrs['readable_name'];
+            unset($attrs['readable_name']);     
         } else {
             $this->attributes['readable_name'] = slug_to_readable($this->name);
-        }
-
-        // others params not mandatory
-        if (array_key_exists('auto_increment', $attrs)) {
-            $this->attributes['auto_increment'] = $attrs['auto_increment'];
-        }
-        if (array_key_exists('primary_key', $attrs)) {
-            $this->attributes['primary_key'] = $attrs['primary_key'];
-        }
-
-        if (array_key_exists('default_value', $attrs)) {
-            $this->attributes['default_value'] = $attrs['default_value'];
         }
         if (array_key_exists('required', $attrs)) {
             $this->attributes['required'] = $attrs['required'];
             $this->validator->setConstraint('required', $attrs['required']);
+            unset($attrs['required']);
         }
-        if (array_key_exists('unique', $attrs)) {
-            $this->attributes['unique'] = $attrs['unique'];
-        }
+        $this->attributes = array_merge($this->attributes,$attrs);
+        // others params not mandatory
+//        if (array_key_exists('auto_increment', $attrs)) {
+//            $this->attributes['auto_increment'] = $attrs['auto_increment'];
+//        }
+//        if (array_key_exists('primary_key', $attrs)) {
+//            $this->attributes['primary_key'] = $attrs['primary_key'];
+//        }
+//
+//        if (array_key_exists('default_value', $attrs)) {
+//            $this->attributes['default_value'] = $attrs['default_value'];
+//        }
+//        if (array_key_exists('unique', $attrs)) {
+//            $this->attributes['unique'] = $attrs['unique'];
+//        }
     }
 
     public function getAttribute($key) {
