@@ -49,6 +49,10 @@ abstract class AbstractFieldForm {
         $this->validator->setValue($val);
     }
 
+    public function getValue(){
+        return $this->value;
+    }
+    
     public function getAttribute($key) {
         return $this->attrs[$key];
     }

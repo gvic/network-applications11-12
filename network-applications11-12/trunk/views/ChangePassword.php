@@ -8,7 +8,7 @@ include 'topnav.php';
         <div class="clear"></div>
         <div id="homecontents" style="width: 679px">
             <h2>
-                Register Form
+                <?php echo $d['title']; ?>
             </h2>
 
             <?php
@@ -16,30 +16,17 @@ include 'topnav.php';
                 $errors = $d['form']->renderNonFieldsError();
                 if ($errors)
                     echo '<div class="error">' . $errors . '</div>';
-                echo "<form " . $d['form']->renderFormAttributes() . " onsubmit=\"return checkAgreement()\">";
+                echo "<form " . $d['form']->renderFormAttributes() . ">";
                 echo $d['form']->renderAsP();
-                $agree = $d['form']->getField('agreement');
-                echo "<p>" . $agree->renderErrors() . "<br>" . $agree->renderField() . " " . $agree->renderLabel() . "</p>";
                 ?>
-                <input type="submit" value="Register">
+                <input type="submit" value="Save">
                 <input type="reset"  value="Reset">
                 <?php
                 echo "</form>";
-                $formName = $d['form']->getAttribute('name');
-                echo '
-                <script type="text/javascript">
-                    function checkAgreement(){
-                        if(document.'.$formName.'.agreement.checked==false){
-                            alert("You must agree the terms of service!");
-                            return false;
-                        }
-                        else
-                            return true;
-                    }
-                </script> ';               
-                
             }
             ?>
+
+
         </div>
         <div id="highlights">
             <ul>

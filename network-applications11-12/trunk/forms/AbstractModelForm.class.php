@@ -56,6 +56,7 @@ abstract class AbstractModelForm extends AbstractForm {
         $className = $class . "Form";
         $this->formFields[$key] = new $className;
         $this->formFields[$key]->setAttributes($attrs);
+        $this->formFields[$key]->setValidator($attrs->getValidator());
         $this->formFields[$key]->setName($key);
     }
 

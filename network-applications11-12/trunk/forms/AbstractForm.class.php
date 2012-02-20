@@ -104,6 +104,10 @@ abstract class AbstractForm {
         return $this->formFields[$key];
     }
 
+    public function getAttribute($key){
+        return $this->formAttributes[$key];
+    }
+    
     public function isValid() {
         $valid = true;
         foreach ($this->formFields as $key => $fieldObj) {

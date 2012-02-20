@@ -18,25 +18,11 @@ class AccountForm extends AbstractModelForm {
     }
    
     protected function excludeFields() {
-        $this->exculdeField('validated');
-        $this->exculdeField('created_at');
-    }
-    
-    protected function setFieldsAttributes() {
-        parent::setFieldsAttributes();
-        $this->formFields['password']->setLabeL('New Password');
-    }
-
-    protected function setFormFields() {
-        parent::setFormFields();
-        $field = new PasswordFieldForm();
-        $field->setLabel("New password confirmation");
-        $this->addFormField($field);
+        $this->exculdeField('validated','created_at','password');
     }
     
     protected function validate() {
-        if($this->data['password'] != $this->data['new_password_confirmation'])
-            throw new Exception("Passwords must match !");
+        return true;
     }
     
     public function save() {
