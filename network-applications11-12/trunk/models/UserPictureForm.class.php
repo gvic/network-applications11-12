@@ -11,8 +11,7 @@ class UserPictureForm extends AbstractModelForm {
     }
 
     protected function excludeFields() {
-        $this->exculdeField('user');
-        $this->exculdeField('thumbnail_path');
+        $this->exculdeField('user','thumbnail_path','image_type');
     }
 
     protected function setModelClassName() {
@@ -25,8 +24,9 @@ class UserPictureForm extends AbstractModelForm {
                 && $_FILES["path"]["type"] != "image/pjpeg")
             throw new Exception("Only png/jpeg/pjpeg are accepted format.");
         
-        if($_FILES["path"]["size"] > 200)
-            throw new Exception("Size file must be under 200 bytes.");
+        $size = 50000;
+        if($_FILES["path"]["size"] > $size)
+            throw new Exception("Size file must be under $size bytes.");
     
         if ($_FILES["path"]["error"] > 0)
             throw new Exception($_FILES["path"]["error"]);

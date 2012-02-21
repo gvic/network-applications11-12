@@ -10,6 +10,9 @@ class FileField extends TextField{
         parent::__construct();
     }
 
+    public function setValue($v) {
+        //TODO: $this->value();
+    }
 
     public function setAttributes($fieldName, array $attrs) {
         parent::setAttributes($fieldName, $attrs);

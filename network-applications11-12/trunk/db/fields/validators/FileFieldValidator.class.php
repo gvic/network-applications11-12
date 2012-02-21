@@ -16,6 +16,10 @@ class FileFieldValidator extends TextFieldValidator {
     public function __construct() {
         parent::__construct();
     }
+    
+    protected function validateValue() {
+        return;
+    }
 
 }
 

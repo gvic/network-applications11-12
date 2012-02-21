@@ -21,6 +21,11 @@ class AccountForm extends AbstractModelForm {
         $this->exculdeField('validated','created_at','password');
     }
     
+    protected function setFieldsAttributes() {
+        parent::setFieldsAttributes();
+        $this->setFieldAttribute('login', 'disabled', 'disabled');
+    }
+    
     protected function validate() {
         return true;
     }

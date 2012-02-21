@@ -1,6 +1,7 @@
 <?php
 
 require_once 'models/UserPictureForm.class.php';
+require_once 'models/User.class.php';
 require_once 'db/exceptions/DuplicateEntryException.class.php';
 
 /**
@@ -14,15 +15,20 @@ class UploadController extends AbstractController {
         $mod = $this->getModule('Auth');
         $mod->checkAccess();
 
-        $userPictureForm = new UserPictureForm($this->request['POST']);
+        $userPictureForm = new UserPictureForm($this->request['POST'], null, $this->request['FILES']);
         $this->d['form'] = $userPictureForm;
         if ($this->request['POST']) {
             if ($userPictureForm->isValid()) {
                 // Business code
 
-                $imagedata = $_FILES["path"]["tmp_name"];
-                $filename = basename($_FILES['path']['name']);
-
+                $file = $this->request['FILES']['path'];
+                $imagedata = $file["tmp_name"];
+                $user = new User();
+                $user->get(array('id' => $this->request['SESSION']['user_id']));
+                $filename = basename($file['name']);
+                $dir = MEDIA . "/static/" . $user->getValue('login');
+                $filepath = $dir . "/$filename";
+                
                 // I will add more information to this array soon, like what frame graphics has been chosen,
                 // and if this is a smaller (thumbnail) preview request, or a request for the full size image.
                 // I need to be done with the HTML first for that.	
@@ -62,8 +68,16 @@ class UploadController extends AbstractController {
 
                 $mess = $this->getModule('Messages');
                 try {
-                    $userForm->save();
-                    $mess->addInfoMessage("Your account has been created.");
+
+                    $createDir = mkdir($dir, 0777);
+                    if ($createDir) {
+                        $userPictureForm->setFieldValue('path', $filepath);
+                        $userPictureForm->save();
+                        $mess->addInfoMessage("Your account has been created.");
+                    } else {
+                        $mess->addErrorMessage("Fail in directory creation.");
+                    }
+                    exit;
                     return $this->redirectTo("Index", array('Messages' => $mess->getMessages()));
                 } catch (DuplicateEntryException $e) {
                     $txt = "An user with the same login or email already exists";

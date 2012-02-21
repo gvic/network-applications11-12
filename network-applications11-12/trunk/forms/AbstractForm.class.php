@@ -12,6 +12,7 @@ abstract class AbstractForm {
      */
     protected $formFields = array();
     protected $data = array();
+    protected $fileData = array();
     protected $nonFieldsError = "";
 
     function __construct($data = array()) {
@@ -52,6 +53,10 @@ abstract class AbstractForm {
 
     protected function excludeFields() {
         
+    }
+    
+    public function setFieldValue($fieldName,$val){
+        $this->formFields[$fieldName]->setValue($val);
     }
 
     protected function exculdeField() {

@@ -17,13 +17,16 @@ abstract class AbstractModelForm extends AbstractForm {
     protected $modelClassName;
     private $modelInstance;
 
-    public function __construct($postData, $modelInstance = null) {
+    public function __construct($postData, $modelInstance = null,$fileData = array()) {
         $this->setModelClassName();
         $this->modelInstance = $modelInstance;
         $this->setFormAttribute("name", $this->modelClassName . "_form");
         $this->setFormAttribute("id", $this->modelClassName . "_id");
 
         if (!empty($postData)) {
+            if(!empty($fileData)){
+                $postData = array_merge($postData,$fileData);
+            }
             parent::__construct($postData);
         } else if (!is_null($modelInstance)) {
             parent::__construct($modelInstance->getValues());
