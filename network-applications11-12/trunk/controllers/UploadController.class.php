@@ -53,6 +53,24 @@ class UploadController extends AbstractController {
                 if (!curl_errno($c)) {
                     $info = curl_getinfo($c);
 
+                    $mess = $this->getModule('Messages');
+                    try {
+                        $createDir = mkdir($dir, 0777);
+                        //if ($createDir) {
+                        $userPictureForm->setFieldValue('path', $filepath);
+                        $userPictureForm->setFieldValue('user', $user);
+                        $userPictureForm->save();
+                        $mess->addInfoMessage("Your account has been created.");
+//                    } else {
+//                        $mess->addErrorMessage("Fail in directory creation.");
+//                    }
+                        exit;
+                        return $this->redirectTo("Index", array('Messages' => $mess->getMessages()));
+                    } catch (DuplicateEntryException $e) {
+                        $txt = "This image name already exists into your account space";
+                        $mess->addErrorMessage($txt);
+                    }
+
                     // write the file out to the users own/unique directory (created on registration for each user),
                     // with a order id dir or order date dir for this mage (suggestion).
                     // If its just a thumbnail then it should be cleaned up afterwards.
@@ -63,26 +81,6 @@ class UploadController extends AbstractController {
                 }
 
                 curl_close($c);
-
-
-
-                $mess = $this->getModule('Messages');
-                try {
-                    $createDir = mkdir($dir, 0777);
-                    //if ($createDir) {
-                    $userPictureForm->setFieldValue('path', $filepath);
-                    $userPictureForm->setFieldValue('user', $user);
-                    $userPictureForm->save();
-                    $mess->addInfoMessage("Your account has been created.");
-//                    } else {
-//                        $mess->addErrorMessage("Fail in directory creation.");
-//                    }
-                    exit;
-                    return $this->redirectTo("Index", array('Messages' => $mess->getMessages()));
-                } catch (DuplicateEntryException $e) {
-                    $txt = "This image name already exists into your account space";
-                    $mess->addErrorMessage($txt);
-                }
             }
         }
 
