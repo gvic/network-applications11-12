@@ -55,7 +55,7 @@ class UploadController extends AbstractController {
 
                     $mess = $this->getModule('Messages');
                     try {
-                        $createDir = mkdir($dir, 0777);
+                        $createDir = mkdir($dir);
                         //if ($createDir) {
                         $userPictureForm->setFieldValue('path', $filepath);
                         $userPictureForm->setFieldValue('user', $user);
