@@ -18,8 +18,8 @@ define('DATABASE_CHARSET',	'latin1'		);
 define('ROOT',				'/var/www/picup/trunk/');
 
 // Path of the media directory
-define('MEDIA',				ROOT.'/media');
-
+//define('MEDIA',				ROOT.'/media');
+define('MEDIA', 'media');
 
 // Extend the include path in order to get
 // rid of the prefix when calling  'include' and 'require' functions

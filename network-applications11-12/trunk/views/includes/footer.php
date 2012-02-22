@@ -1,49 +1,21 @@
 
 <div id="footer">
+    <?php $pics = $d['last_pictures']; ?>
     <div id="footercontent">
         <div id="previews"> Recently Uploaded <br /><br />
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img alt="Photo 1" src="">
-                </a>
-                <span class="caption">Image Caption</span>
-            </div>
+            <?php
+            foreach ($pics as $key => $obj) {
+                echo
+                '<div class="item">
+                    <a href="#">
+                        <img alt="Photo 1" src="'.$obj->getValue('path').'">
+                    </a>
+                    <span class="caption">'.$obj->getValue('image_name').'</span>
+                </div>';
+            }
+            ?>
+
+            
         </div>
     </div>
 </div>

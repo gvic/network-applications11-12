@@ -12,7 +12,7 @@ class LastPictures extends AbstractModule{
 
     public function startHook() {
         $qb = new CriteriaBuilder();
-        $qb->limit(5);
+        $qb->orderBy('-id')->limit(5);
         $lastUP = new UserPicture();
         $lastUP = $lastUP->find($qb);
         $this->controller->setData('last_pictures',$lastUP);

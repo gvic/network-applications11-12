@@ -61,7 +61,8 @@ class CriteriaBuilder {
      * whereas "field" mean ASC order on that field.
      * @return QueryBuilder
      */
-    public function orderBy(array $fields) {
+    public function orderBy() {
+        $fields = func_get_args();
         $n = count($fields);
         $i = 0;
         foreach ($fields as $arg) {
