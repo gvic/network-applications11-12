@@ -70,7 +70,7 @@ class UploadController extends AbstractController {
                             $userPictureForm->setFieldValue('path', $filepath);
                             $userPictureForm->setFieldValue('user', $user);
                             $userPictureForm->save();
-                            $mess->addInfoMessage("Your image has beeb uploaded.");
+                            $mess->addInfoMessage("Your image has been uploaded.");
                         } else {
                             $mess->addErrorMessage("Fail in directory creation or file writing.");
                         }
