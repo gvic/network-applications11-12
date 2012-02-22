@@ -17,15 +17,15 @@ abstract class AbstractModelForm extends AbstractForm {
     protected $modelClassName;
     private $modelInstance;
 
-    public function __construct($postData, $modelInstance = null,$fileData = array()) {
+    public function __construct($postData, $modelInstance = null, $fileData = array()) {
         $this->setModelClassName();
         $this->modelInstance = $modelInstance;
         $this->setFormAttribute("name", $this->modelClassName . "_form");
         $this->setFormAttribute("id", $this->modelClassName . "_id");
 
         if (!empty($postData)) {
-            if(!empty($fileData)){
-                $postData = array_merge($postData,$fileData);
+            if (!empty($fileData)) {
+                $postData = array_merge($postData, $fileData);
             }
             parent::__construct($postData);
         } else if (!is_null($modelInstance)) {
@@ -69,12 +69,19 @@ abstract class AbstractModelForm extends AbstractForm {
         foreach ($this->formFields as $key => $field) {
 
             if (array_key_exists($key, $modelFieldsObjects) &&
-                    array_key_exists($key, $this->data))
+                    array_key_exists($key, $this->data)) {
+
                 $modelFieldsObjects[$key]->setValue($this->data[$key]);
+            }
         }
     }
 
-    public function save($insert=true) {
+    public function setFieldValue($fieldName, $val) {
+        parent::setFieldValue($fieldName, $val);
+        $this->modelInstance->setFieldValue($fieldName, $val);
+    }
+
+    public function save($insert = true) {
         $this->modelInstance->save($insert);
     }
 

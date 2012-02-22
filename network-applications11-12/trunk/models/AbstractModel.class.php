@@ -103,6 +103,11 @@ abstract class AbstractModel {
         return $this->fieldObjects;
     }
 
+    public function setFieldValue($key, $value) {
+        if (isset($this->fieldObjects[$key]))
+            $this->fieldObjects[$key]->setValue($value);
+    }
+
     private function instantiateFields() {
         $id = array('id' => array('class' => 'IntegerField', 'auto_increment' => true, 'primary_key' => true));
         $this->fields = array_merge($id, $this->fields);

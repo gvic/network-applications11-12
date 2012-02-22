@@ -11,7 +11,7 @@ class UserPictureForm extends AbstractModelForm {
     }
 
     protected function excludeFields() {
-        $this->exculdeField('user','thumbnail_path','image_type');
+        $this->exculdeField('user','thumbnail_path');
     }
 
     protected function setModelClassName() {

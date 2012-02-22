@@ -24,12 +24,21 @@ abstract class AbstractFieldForm {
     protected $validator;
     protected $errors = array();
     protected $render = true;
+    protected $excluded = false;
 
     public function __construct() {
         $this->attrs['name'] = '';
-        $class = substr(get_called_class(),0,-4)."Validator";
-        require_once 'db/fields/validators/'.$class.'.class.php';
+        $class = substr(get_called_class(), 0, -4) . "Validator";
+        require_once 'db/fields/validators/' . $class . '.class.php';
         $this->validator = new $class;
+    }
+
+    public function setExcluded($b) {
+        $this->excluded = $b;
+    }
+
+    public function isExcluded() {
+        return $this->excluded;
     }
 
     public function setLabel($v) {
@@ -49,10 +58,10 @@ abstract class AbstractFieldForm {
         $this->validator->setValue($val);
     }
 
-    public function getValue(){
+    public function getValue() {
         return $this->value;
     }
-    
+
     public function getAttribute($key) {
         return $this->attrs[$key];
     }
@@ -82,7 +91,7 @@ abstract class AbstractFieldForm {
 
         if ($modelField->getAttribute('required'))
         //    $this->attrs['required'] = 'required';
-        $this->setValue($modelField->getValue());
+            $this->setValue($modelField->getValue());
         $this->setLabel($modelField->getAttribute('readable_name'));
     }
 
@@ -131,7 +140,7 @@ abstract class AbstractFieldForm {
     public function renderAsP() {
 
         $ret = "";
-        if ($this->render) {
+        if ($this->render && !$this->excluded) {
             if (array_key_exists('type', $this->attrs) &&
                     $this->attrs['type'] == 'hidden') {
                 $ret = $this->renderField();
@@ -146,12 +155,14 @@ abstract class AbstractFieldForm {
 
     public function isValid() {
         $this->errors = array();
-        try {
-            $this->validator->validate();
-        } catch (Exception $e) {
-            $this->errors[] = $e->getMessage();
+        if (!$this->excluded) {
+            try {
+                $this->validator->validate();
+            } catch (Exception $e) {
+                $this->errors[] = $e->getMessage();
+            }
         }
-        return (count($this->errors) == 0);
+        return (count($this->errors) == 0 || $this->excluded);
     }
 
     public function getValidator() {

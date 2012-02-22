@@ -103,7 +103,7 @@ class QueryBuilder {
                 $ttmp .= "CONSTRAINT `fk_" . $fieldObj->getRelatedModelDBName() . "` ";
                 $ttmp .= "FOREIGN KEY (`" . $fieldObj->getName() . "`) ";
                 $ttmp .= "REFERENCES `" . $fieldObj->getRelatedModelDBName() . "` (`id`) ";
-                $ttmp .= "ON DELETE CASCADE";
+                $ttmp .= "ON DELETE CASCADE ON UPDATE CASCADE";
                 $keyUniqFk = array_search($fieldName, $uniqueness);
 
                 if ($keyUniqFk !== FALSE) {

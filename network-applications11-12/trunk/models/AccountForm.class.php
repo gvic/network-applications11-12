@@ -23,7 +23,7 @@ class AccountForm extends AbstractModelForm {
     
     protected function setFieldsAttributes() {
         parent::setFieldsAttributes();
-        $this->setFieldAttribute('login', 'disabled', 'disabled');
+        $this->setFieldAttribute('login', 'readonly', 'readonly');
     }
     
     protected function validate() {

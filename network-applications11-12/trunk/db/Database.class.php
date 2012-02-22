@@ -45,7 +45,6 @@ class Database {
     }
 
     public function executeQuery() {
-        print $this->buffer;
         $this->result = mysql_query($this->buffer) or $this->dbExceptionManager->throwException(mysql_errno(), mysql_error());
         return $this;
     }

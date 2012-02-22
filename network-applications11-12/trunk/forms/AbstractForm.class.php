@@ -61,7 +61,7 @@ abstract class AbstractForm {
 
     protected function exculdeField() {
         foreach (func_get_args() as $key => $fieldName)
-            unset($this->formFields[$fieldName]);
+            $this->formFields[$fieldName]->setExcluded(true);
     }
 
     protected function setFormAttributes() {
