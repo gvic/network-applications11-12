@@ -8,7 +8,7 @@
                 echo
                 '<div class="item">
                     <a href="#">
-                        <img alt="Photo 1" src="'.$obj->getValue('path').'">
+                        <img alt="Photo 1" src="'.$obj->getValue('thumbnail_media_path').'">
                     </a>
                     <span class="caption">'.$obj->getValue('image_name').'</span>
                 </div>';

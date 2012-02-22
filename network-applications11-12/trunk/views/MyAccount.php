@@ -12,9 +12,9 @@ include 'topnav.php';
             </h2>
 
             <ul>
+                <li><a href="?c=ManageMyPictures">Manage my pictures</a></li>
                 <li><a href="?c=MyAccountDetails">Change my account details</a></li>
                 <li><a href="?c=ChangePassword">Change my password</a></li>
-                <li><a href="?c=ManageMyPicture">Manage my pictures</a></li>
             </ul>
             
         </div>

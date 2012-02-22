@@ -19,8 +19,8 @@ abstract class AbstractForm {
         $this->setFormFields();
         $this->data = $data;
         $this->mapData();
-        $this->setFieldsAttributes();
         $this->excludeFields();
+        $this->setFieldsAttributes();
         $this->setFormAttributes();
     }
 
@@ -28,7 +28,7 @@ abstract class AbstractForm {
         foreach ($this->data as $key => $value) {
             if (array_key_exists($key, $this->formFields)) {
                 $postFeeding = true;
-                $this->formFields[$key]->setValue($value, $postFeeding);
+                $this->formFields[$key]->setValue($value);
             }
         }
     }
@@ -54,8 +54,8 @@ abstract class AbstractForm {
     protected function excludeFields() {
         
     }
-    
-    public function setFieldValue($fieldName,$val){
+
+    public function setFieldValue($fieldName, $val) {
         $this->formFields[$fieldName]->setValue($val);
     }
 
@@ -109,10 +109,10 @@ abstract class AbstractForm {
         return $this->formFields[$key];
     }
 
-    public function getAttribute($key){
+    public function getAttribute($key) {
         return $this->formAttributes[$key];
     }
-    
+
     public function isValid() {
         $valid = true;
         foreach ($this->formFields as $key => $fieldObj) {

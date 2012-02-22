@@ -21,12 +21,12 @@ class UploadController extends AbstractController {
             if ($userPictureForm->isValid()) {
                 // Business code
 
-                $file = $this->request['FILES']['path'];
+                $file = $this->request['FILES']['media_path'];
                 $imagedata = $file["tmp_name"];
                 $user = new User();
                 $user->get(array('id' => $this->request['SESSION']['user_id']));
                 $filename = basename($file['name']);
-                $dir = MEDIA . "/static/" . $user->getValue('login');
+                $dir = MEDIA . "static/" . $user->getValue('login');
                 $filepath = $dir . "/$filename";
 
                 // I will add more information to this array soon, like what frame graphics has been chosen,
@@ -55,19 +55,21 @@ class UploadController extends AbstractController {
 
                     $mess = $this->getModule('Messages');
                     try {
-                        $createDir = true;
+                        $createdDir = true;
                         if (!is_dir($dir)) {
-                            $createDir = mkdir($dir, 0777);
+                            $createdDir = mkdir($dir, 0777);
                         }
                         // write the file out to the users own/unique directory (created on registration for each user),
                         // with a order id dir or order date dir for this mage (suggestion).
                         // If its just a thumbnail then it should be cleaned up afterwards.
-                        $writtenFile = file_put_contents($filepath, $output);
+                        $writtenFile = false;
+                        if ($createdDir)
+                            $writtenFile = file_put_contents($filepath, $output);
 
                         // user could have 2 options: download the image or order it to be sent in the postal mail
                         //echo "<img src='$filename' alt='photo' />";
-                        if ($createDir && $writtenFile) {
-                            $userPictureForm->setFieldValue('path', $filepath);
+                        if ($createdDir && $writtenFile) {
+                            $userPictureForm->setFieldValue('media_path', $filepath);
                             $userPictureForm->setFieldValue('user', $user);
                             $userPictureForm->save();
                             $mess->addInfoMessage("Your image has been uploaded.");

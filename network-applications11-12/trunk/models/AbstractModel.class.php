@@ -206,10 +206,17 @@ abstract class AbstractModel {
         return clone $this;
     }
 
+    
+    /**
+     * Must be called
+     * @param type $insert
+     * @return type 
+     */
     public function save($insert = true) {
         if ($insert) {
             $this->queryBuilder->insert($this->tableName, $this->fieldObjects);
         } else {
+            //TODO: a save with insert = false requires update method to be called before...
             $this->queryBuilder->update($this->tableName, $this->fieldObjects);
         }
         $stat = $this->queryBuilder->getStatment();
@@ -251,6 +258,7 @@ abstract class AbstractModel {
             throw new MultipleEntryException($this->modelName);
         }
 
+        //TODO : make conversion btw db types to php types
         $this->fieldObjectsStack[] = $this->db->fetchAssoc(); // TO CHECK
         /*         * $arr = $this->db->fetchAssoc();
           $entry = array();
