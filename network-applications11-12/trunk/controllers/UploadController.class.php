@@ -55,7 +55,7 @@ class UploadController extends AbstractController {
 
                     $mess = $this->getModule('Messages');
                     try {
-                        $createDir = mkdir($dir);
+                        $createDir = mkdir($dir,0777);
                         // write the file out to the users own/unique directory (created on registration for each user),
                         // with a order id dir or order date dir for this mage (suggestion).
                         // If its just a thumbnail then it should be cleaned up afterwards.
