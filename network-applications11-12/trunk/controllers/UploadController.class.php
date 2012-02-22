@@ -67,7 +67,7 @@ class UploadController extends AbstractController {
                             $userPictureForm->setFieldValue('path', $filepath);
                             $userPictureForm->setFieldValue('user', $user);
                             $userPictureForm->save();
-                            $mess->addInfoMessage("Your account has been created.");
+                            $mess->addInfoMessage("Your image has beeb uploaded.");
                         } else {
                             $mess->addErrorMessage("Fail in directory creation or file writing.");
                         }

@@ -45,7 +45,7 @@ abstract class AbstractForm {
         $out = "";
         $i = 0;
         foreach ($this->formFields as $fieldObj) {
-            $fieldObj->setAttribute('tabindex', $i++);
+            //$fieldObj->setAttribute('tabindex', $i++);
             $out .= $fieldObj->renderAsP();
         }
         return $out;
