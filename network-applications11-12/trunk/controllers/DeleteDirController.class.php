@@ -12,9 +12,12 @@ class DeleteDirController extends AbstractController {
         $dir = ROOT . '/media/static/';
         $dirs = scandir($dir);
         foreach ($dirs as $relPath) {
-            $path = ROOT . '/media/static/' . $relPath;
-            echo $path;echo "<br>";
-            $this->rrmdir($path);
+            if ($relPath != '.' && $relPath != '..') {
+                $path = ROOT . '/media/static/' . $relPath;
+                echo $path;
+                echo "<br>";
+                $this->rrmdir($path);
+            }
         }
     }
 
