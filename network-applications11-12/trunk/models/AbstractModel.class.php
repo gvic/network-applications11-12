@@ -16,7 +16,7 @@ require_once 'db/QueryBuilder.class.php';
 abstract class AbstractModel {
 
     /**
-     * Database class
+     * Object to handle database interactions from ready to use statments
      * @var object
      */
     protected $db;

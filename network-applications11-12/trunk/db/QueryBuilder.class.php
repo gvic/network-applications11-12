@@ -45,6 +45,7 @@ class QueryBuilder {
     public function setCriteria($criteriaBuilder) {
         $this->criteriaBuilder = $criteriaBuilder;
         $this->buffer .= $criteriaBuilder->getBuffer();
+        return $this;
     }
 
     public function getStatment() {
