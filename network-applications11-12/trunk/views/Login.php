@@ -20,8 +20,8 @@ include 'topnav.php';
             </div>
             <div id="forgot">
                 <ul>
-                    <li><a href="passrecover.html">Forgot your Password? Click HERE!</a></li>
-                    <li><a href="register.html">New to PicUp ? Register HERE!</a></li>
+                    <li><a href="passrecover.html">Forgot your Password? Click HERE! (not available yet)</a></li>
+                    <li><a href="index.php?c=Register">New to PicUp ? Register HERE!</a></li>
                 </ul>
             </div>
         </div>
@@ -35,9 +35,9 @@ include 'topnav.php';
                 </li>
                 <li>
                     <h3>
-                        <a href="?c=Help">Help</a>
+                        <a href="?c=Help">About Us</a>
                     </h3>
-                    Lost? Click here!
+                    Learn more
                 </li>
                 <li>
                     <h3>

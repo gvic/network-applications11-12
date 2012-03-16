@@ -104,7 +104,8 @@ abstract class AbstractFieldForm {
     protected function renderAttributes() {
         $out = "";
         foreach ($this->attrs as $key => $value) {
-            $out .= $key . '="' . $value . '" ';
+			if($key != 'label')
+				$out .= $key . '="' . $value . '" ';
         }
         // TODO uncomment for HTML5 support
 //        if($this->validator->getConstraint('required')){
@@ -115,7 +116,7 @@ abstract class AbstractFieldForm {
 
     public function renderField() {
         $out = '<' . $this->getTagType() . ' ' . $this->renderAttributes();
-        $out .= ' value="' . $this->value . '"/>';
+        $out .= ' value="' . $this->value . '" />';
         return $out;
     }
 
@@ -143,9 +144,9 @@ abstract class AbstractFieldForm {
         if ($this->render && !$this->excluded) {
             if (array_key_exists('type', $this->attrs) &&
                     $this->attrs['type'] == 'hidden') {
-                $ret = $this->renderField();
+                $ret = '<div>'.$this->renderField().'</div>';
             } else {
-                $ret = '<p>' . $this->renderLabel() . '<br>';
+                $ret = '<p>' . $this->renderLabel() . '<br/>';
                 $ret .= $this->renderErrors();
                 $ret .= $this->renderField() . '</p>';
             }

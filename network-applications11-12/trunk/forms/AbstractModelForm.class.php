@@ -20,7 +20,7 @@ abstract class AbstractModelForm extends AbstractForm {
     public function __construct($postData, $modelInstance = null, $fileData = array()) {
         $this->setModelClassName();
         $this->modelInstance = $modelInstance;
-        $this->setFormAttribute("name", $this->modelClassName . "_form");
+        //$this->setFormAttribute("name", $this->modelClassName . "_form"); NO name attribute in 1999 xhtml specs
         $this->setFormAttribute("id", $this->modelClassName . "_id");
 
         if (!empty($postData)) {

@@ -12,7 +12,7 @@ class RegisterForm extends AbstractModelForm {
     protected function setFieldsAttributes() {
         parent::setFieldsAttributes();
         $this->setFieldAttribute('created_at', 'type', 'hidden');
-        $this->setFieldAttribute('created_at', 'value', date('Y-m-d'));
+        $this->setFieldValue('created_at', date('Y-m-d'));
     }
 
     protected function excludeFields() {

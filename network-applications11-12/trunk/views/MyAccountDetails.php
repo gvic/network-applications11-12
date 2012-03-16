@@ -32,19 +32,19 @@ include 'topnav.php';
             <ul>
                 <li>
                     <h3>
-                        <a href="account.html">Your Account</a>
+                        <a href="index.php?c=MyAccount">Your Account</a>
                     </h3>
                     Your account details
                 </li>
                 <li>
                     <h3>
-                        <a href="help.html">Help</a>
+                        <a href="index.php?c=About">About Us</a>
                     </h3>
-                    Lost? Click here!
+                    Learn more
                 </li>
                 <li>
                     <h3>
-                        <a href="TandC.html">TermsConditions</a>
+                        <a href="index.php?c=TandC">Terms and Conditions</a>
                     </h3>
                     Please Read Carefully
                 </li>

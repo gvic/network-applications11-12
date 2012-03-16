@@ -55,10 +55,6 @@ abstract class AbstractForm {
         
     }
 
-    public function setFieldValue($fieldName, $val) {
-        $this->formFields[$fieldName]->setValue($val);
-    }
-
     protected function exculdeField() {
         foreach (func_get_args() as $key => $fieldName)
             $this->formFields[$fieldName]->setExcluded(true);
@@ -78,6 +74,10 @@ abstract class AbstractForm {
 
     protected function setFieldAttribute($fieldName, $key, $value) {
         $this->formFields[$fieldName]->setAttribute($key, $value);
+    }
+    
+    protected function setFieldValue($fieldName,$value) {
+        $this->formFields[$fieldName]->setValue($value);
     }
 
     public function setFormAttribute($key, $value) {
