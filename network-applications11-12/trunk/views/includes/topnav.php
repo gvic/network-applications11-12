@@ -40,9 +40,6 @@
                 <li>
                     <a href="?c=Browse">Browse</a>
                 </li>
-                <li>
-                    <a href="?c=Contact">Contact Us</a>
-                </li>
             </ul>
         </div>
 
