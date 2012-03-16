@@ -10,6 +10,13 @@ include 'topnav.php';
             <h2>
                 <?php echo $d['title']; ?>
             </h2>
+            <?php
+            if(isset($d['pics'])){
+                foreach ($d['pics'] as $pic){
+                    echo $pic;
+                }
+            }
+            ?>
 
         </div>
         <?php include ('sideBox.php'); ?>
