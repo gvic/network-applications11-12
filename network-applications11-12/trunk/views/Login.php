@@ -25,28 +25,7 @@ include 'topnav.php';
                 </ul>
             </div>
         </div>
-        <div id="highlights">
-            <ul>
-                <li>
-                    <h3>
-                        <a href="?c=MyAccount">My Account</a>
-                    </h3>
-                    Your account details
-                </li>
-                <li>
-                    <h3>
-                        <a href="?c=Help">About Us</a>
-                    </h3>
-                    Learn more
-                </li>
-                <li>
-                    <h3>
-                        <a href="?c=TandC">TermsConditions</a>
-                    </h3>
-                    Please Read Carefully
-                </li>
-            </ul>
-        </div>
+        <?php include ('sideBox.php'); ?>
         <div class="clear"></div>
     </div>
 </div>
