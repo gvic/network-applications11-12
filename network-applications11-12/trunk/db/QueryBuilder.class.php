@@ -37,7 +37,7 @@ class QueryBuilder {
         $this->engine = $eng;
     }
 
-    private function cleanBuffer() {
+    public function cleanBuffer() {
         $this->buffer = "";
         $this->criteriaBuilder->cleanBuffer();
     }
@@ -117,7 +117,7 @@ class QueryBuilder {
             }
 
             if ($fieldObj->getAttribute('unique')) {
-                $uniqFieldsClauses[] = "UNIQUE (" . $fieldObj->getName() . ")";
+                $uniqFields[] = $fieldObj->getName();
             }
 
             $tmp[] = $ttmp;
@@ -130,9 +130,10 @@ class QueryBuilder {
             $this->buffer .= ", PRIMARY KEY (" . flat_array($pks, ",") . ")";
         }
 
-        $n = count($uniqFieldsClauses);
+        $n = count($uniqFields);
         if ($n > 0) {
-            $this->buffer .= ", " . flat_array($uniqFieldsClauses, ",");
+	  $ffs = flat_array($uniqFields, ",");
+	  $this->buffer .= ", CONSTRAINT uniq_fields UNIQUE (".$ffs.")";
         }
 
         $n = count($uniqueness);
@@ -169,13 +170,15 @@ class QueryBuilder {
         $values = "";
         $this->buffer = "INSERT INTO `" . $tableName . "` ";
         foreach ($ormFields as $fieldObj) {
-            $fields .= $fieldObj->getName();
-            $values .= "'" . $this->escape($fieldObj->getValue()) . "'";
-            if ($i < $n - 1) {
+	  if($fieldObj->getValue()){
+            if ($i > 0) {
                 $fields .= ",";
                 $values .= ",";
             }
+            $fields .= $fieldObj->getName();
+            $values .= "'" . $this->escape($fieldObj->getValue()) . "'";
             $i++;
+	  }
         }
         $this->buffer .= "($fields) VALUES ($values);";
     }
@@ -186,13 +189,16 @@ class QueryBuilder {
         $fields = "";
         $values = "";
         foreach ($ormFields as $fieldObj) {
+	  if($fieldObj->getValue()){
+            if ($i > 0) {
+	      $fields .= ",";
+	      $values .= ",";
+            }
             $fields .= $fieldObj->getName();
             $values .= "'" . $this->escape($fieldObj->getValue()) . "'";
-            if ($i < $n - 1) {
-                $fields .= ",";
-                $values .= ",";
-            }
             $i++;
+	  }
+
         }
         if ($this->firstInsert) {
             $this->cleanBuffer();
@@ -220,17 +226,20 @@ class QueryBuilder {
         $n = count($ormFields);
         $i = 0;
         foreach ($ormFields as $fieldObj) {
+	  if($fieldObj->getValue()){
+            if ($i > 0) {
+                $this->buffer .= ",";
+            }
+
             $this->buffer .= $fieldObj->getName() . "=";
             if (is_numeric($fieldObj->getValue())) {
                 $this->buffer .= $this->escape($fieldObj->getValue());
             } else {
                 $this->buffer .= "'" . $fieldObj->getValue() . "'";
             }
-            if ($i < $n - 1) {
-                $this->buffer .= ",";
-            }
             $this->buffer .= " ";
             $i++;
+	  }
         }
         $this->where('id', '=', $id);
         return $this;

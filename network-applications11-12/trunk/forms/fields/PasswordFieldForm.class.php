@@ -13,7 +13,7 @@ class PasswordFieldForm extends TextFieldForm {
     public function setStaticAttributes() {
         $this->attrs['type'] = 'password';
         // reset if reloaded page
-        $this->attrs['value'] = '';
+        $this->value = '';
     }
 
 }

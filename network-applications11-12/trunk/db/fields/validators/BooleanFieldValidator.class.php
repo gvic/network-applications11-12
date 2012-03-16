@@ -19,9 +19,9 @@ class BooleanFieldValidator extends AbstractValidator {
         
     protected function validateType() {
         $bool = (bool) $this->value;
-        if (!$bool) {
-            throw new InvalidTypeException($this->value);
-        }
+//        if (!$bool) {
+  //          throw new InvalidTypeException($this->value);
+    //    }
     }
 
     protected function validateValue() {

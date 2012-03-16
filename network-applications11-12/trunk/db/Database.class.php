@@ -45,8 +45,8 @@ class Database {
     }
 
     public function executeQuery() {
-        $this->result = mysql_query($this->buffer) or $this->dbExceptionManager->throwException(mysql_errno(), mysql_error());
-        return $this;
+      $this->result = mysql_query($this->buffer) or $this->dbExceptionManager->throwException(mysql_errno(), mysql_error());
+      return $this;
     }
 
     public function count() {

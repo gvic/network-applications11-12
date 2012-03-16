@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -13,10 +14,10 @@ class DeleteDirController extends AbstractController {
         $dirs = scandir($dir);
         foreach ($dirs as $relPath) {
             if ($relPath != '.' && $relPath != '..') {
-                $path = ROOT . '/media/static/' . $relPath;
+                $path = $dir . $relPath;
                 echo $path;
                 echo "<br>";
-                $this->rrmdir($path);
+                echo $this->rrmdir($path);
             }
         }
     }

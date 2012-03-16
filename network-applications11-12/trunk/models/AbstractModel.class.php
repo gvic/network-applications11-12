@@ -350,7 +350,9 @@ abstract class AbstractModel {
     public function find($criteriaBuilder) {
         $this->queryBuilder->select()->from($this->tableName);
         $this->queryBuilder->setCriteria($criteriaBuilder);
-        $this->db->setStatment($this->queryBuilder->getStatment())->executeQuery();
+	$stat = $this->queryBuilder->getStatment();
+	$this->queryBuilder->cleanBuffer();
+        $this->db->setStatment($stat)->executeQuery();
         $modelsArray = array();
         while ($data = $this->db->fetchAssoc()) {
             $this->fieldObjectsStack[] = $data;

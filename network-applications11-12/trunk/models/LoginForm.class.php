@@ -18,7 +18,6 @@ class LoginForm extends AbstractForm {
 
     protected function setFormAttributes() {
         parent::setFormAttributes();
-        $this->setFormAttribute('name', 'loginForm');
         $this->setFormAttribute('id', 'loginForm_id');
     }
     

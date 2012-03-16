@@ -3,6 +3,7 @@
 require_once 'models/UserPictureForm.class.php';
 require_once 'models/User.class.php';
 require_once 'db/exceptions/DuplicateEntryException.class.php';
+require_once 'utils/utils.php';
 
 /**
  * Description of RegisterContrller
@@ -11,86 +12,103 @@ require_once 'db/exceptions/DuplicateEntryException.class.php';
  */
 class UploadController extends AbstractController {
 
-    protected function action() {
-        $mod = $this->getModule('Auth');
-        $mod->checkAccess();
+  protected function action() {
+    $mod = $this->getModule('Auth');
+    //$mod->checkAccess();
 
-        $userPictureForm = new UserPictureForm($this->request['POST'], null, $this->request['FILES']);
-        $this->d['form'] = $userPictureForm;
-        if ($this->request['POST']) {
-            if ($userPictureForm->isValid()) {
-                // Business code
+    $userPictureForm = new UserPictureForm($this->request['POST'], null, $this->request['FILES']);
+    $this->d['form'] = $userPictureForm;
+    if ($this->request['POST']) {
+      if ($userPictureForm->isValid()) {
+	// Business code
 
-                $file = $this->request['FILES']['media_path'];
-                $imagedata = $file["tmp_name"];
-                $user = new User();
-                $user->get(array('id' => $this->request['SESSION']['user_id']));
-                $filename = basename($file['name']);
-                $dir = MEDIA . "static/" . $user->getValue('login');
-                $filepath = $dir . "/$filename";
+	$file = $this->request['FILES']['media_path'];
+	$imagedata = $file["tmp_name"];
+	$user = new User();
+	$user->get(array('id' => $this->request['SESSION']['user_id']));
+	//$filename = basename($file['name']);
+	$split = explode('.',basename($file['name']));
+	$ext = $split[count($split)-1];
+	$filename = slugify($this->request['POST']['image_name']).'.'.$ext;;
+	$dir = MEDIA . "/static/" . $user->getValue('login');
+	
 
-                // I will add more information to this array soon, like what frame graphics has been chosen,
-                // and if this is a smaller (thumbnail) preview request, or a request for the full size image.
-                // I need to be done with the HTML first for that.	
-                $data = array(
-                    'uploaded_file' => '@' . $imagedata . ';filename=' . $filename,
-                );
-                // will change this uri as soon as I get the glassfish server up
-                $url = 'http://localhost:8080/CardServiceApp/resources/imaging/fullsize';
+	// I will add more information to this array soon, like what frame graphics has been chosen,
+	// and if this is a smaller (thumbnail) preview request, or a request for the full size image.
+	// I need to be done with the HTML first for that.	
+	$data = array('uploaded_file' => '@' . $imagedata . ';filename=' . $filename);
 
-                $c = curl_init();
-                curl_setopt($c, CURLOPT_URL, $url);
-                curl_setopt($c, CURLOPT_HEADER, false);
-                curl_setopt($c, CURLOPT_POST, true);
-                curl_setopt($c, CURLOPT_POSTFIELDS, $data);
-                curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	$url = 'www2.macs.hw.ac.uk:8180/CardServiceApp/resources/imaging/fullsize';
 
-                $output = curl_exec($c);
+	$c = curl_init();
+	curl_setopt($c, CURLOPT_URL, $url);
+	curl_setopt($c, CURLOPT_HEADER, false);
+	curl_setopt($c, CURLOPT_POST, true);
+	curl_setopt($c, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 
-                if ($output === false)
-                    trigger_error('Erreur curl : ' . curl_error($c), E_USER_WARNING);
+	$output = curl_exec($c);
+	if ($output === false)
+	  trigger_error('Erreur curl : ' . curl_error($c), E_USER_WARNING);
 
-                if (!curl_errno($c)) {
-                    $info = curl_getinfo($c);
+	if (!curl_errno($c)) {
+				
+	  $info = curl_getinfo($c);
+		
+	  $mess = $this->getModule('Messages');
+	  try {
+	    $createdDir = true;
+	    $absolutDirPath = ROOT."/$dir";
+	    if (!is_dir($absolutDirPath)) {
+	      $media = ROOT.'/media/static/';
+	      chmod($media,0777);
+	      $createdDir = mkdir($absolutDirPath, 0755);
+	    }
+	    // write the file out to the users own/unique directory (created on registration for each user),
+	    // with a order id dir or order date dir for this mage (suggestion).
+	    // If its just a thumbnail then it should be cleaned up afterwards.
+	    $writtenFile = false;
 
-                    $mess = $this->getModule('Messages');
-                    try {
-                        $createdDir = true;
-                        if (!is_dir($dir)) {
-                            $createdDir = mkdir($dir, 0777);
-                        }
-                        // write the file out to the users own/unique directory (created on registration for each user),
-                        // with a order id dir or order date dir for this mage (suggestion).
-                        // If its just a thumbnail then it should be cleaned up afterwards.
-                        $writtenFile = false;
-                        if ($createdDir)
-                            $writtenFile = file_put_contents($filepath, $output);
+	    if ($createdDir){
+	      $filepath = "$absolutDirPath/$filename";
+	      if(file_exists($filepath)){
+		$mess->addErrorMessage("The same file has already been uploaded");
+	      }else{
+		$writtenFile = file_put_contents($filepath, $output);
+	      }
+	    }
 
-                        // user could have 2 options: download the image or order it to be sent in the postal mail
-                        //echo "<img src='$filename' alt='photo' />";
-                        if ($createdDir && $writtenFile) {
-                            $userPictureForm->setFieldValue('media_path', $filepath);
-                            $userPictureForm->setFieldValue('user', $user);
-                            $userPictureForm->save();
-                            $mess->addInfoMessage("Your image has been uploaded.");
-                        } else {
-                            $mess->addErrorMessage("Fail in directory creation or file writing.");
-                        }
-                        return $this->redirectTo("Index", array('Messages' => $mess->getMessages()));
-                    } catch (DuplicateEntryException $e) {
-                        $txt = "This image name already exists into your account space";
-                        $mess->addErrorMessage($txt);
-                    }
-                }
+	    // user could have 2 options: download the image or order it to be sent in the postal mail
+	    if ($createdDir && $writtenFile) {
+	      $media_path = MEDIA . '/static/' . $user->getValue('login') . '/' . $filename;
+	      $userPictureForm->setFieldValue('media_path', $media_path);
+	      $userPictureForm->setFieldValue('user', $user);
+	      $userPictureForm->save();
+	      $mess->addInfoMessage("Your image has been uploaded.");
+	      curl_close($c);
+	      return $this->redirectTo("ManageMyPictures", array('Messages' => $mess->getMessages()));
+	    } else {
+	      $mess->addErrorMessage("Fail in directory creation or file writing.");
+	      curl_close($c);
+	      return $this->redirectTo("Upload", array('Messages' => $mess->getMessages()));
+	    }
 
-                curl_close($c);
-            }
-        }
+	  } catch (DuplicateEntryException $e) {
+	    $txt = "This image name already exists into your account space";
+	    $mess->addErrorMessage($txt);
+	    curl_close($c);
+	  }
 
 
-        return $this->renderToTemplate();
+	  
+	}
+      }
+
+
     }
+    return $this->renderToTemplate();
 
+  }
 }
 
 ?>
