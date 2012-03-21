@@ -21,11 +21,11 @@
                     <?php }
                     ?>
                 </span>
-                <form action="#">
+                <form action="?c=Search" method="get">
                     <div class="searchform">
                         <label for="searchtxt"> Search Pics From Others: </label>
-                        <input id="searchtxt" class="keywordfield">
-                        <input type="submit" value="Search">
+                        <input id="searchtxt" name="keywords"/>
+                        <input type="submit" value="Search"/>
                     </div>
                 </form>
             </div>
