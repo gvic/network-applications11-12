@@ -21,7 +21,8 @@
                     <?php }
                     ?>
                 </span>
-                <form action="?c=Search" method="get">
+                <form action="" method="get">
+                    <input type="hidden" name="c" value="Search">
                     <div class="searchform">
                         <label for="searchtxt"> Search Pics From Others: </label>
                         <input id="searchtxt" name="keywords"/>
