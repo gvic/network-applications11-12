@@ -18,8 +18,8 @@
                 }
                 ?>
             </div>
-        <?php } ?>
-    </div>
+        </div>
+    <?php } ?>
 </div>
 <div id="credit">
     Network Applications - Coursework 2011 / 2012 @ Heriot-Watt University
