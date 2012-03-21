@@ -17,22 +17,17 @@ abstract class AbstractModelForm extends AbstractForm {
     protected $modelClassName;
     protected $modelInstance;
 
-    public function __construct($postData, $modelInstance = null, $fileData = array()) {
+    public function __construct($postData = array(), $modelInstance = null, $fileData = array()) {
         $this->setModelClassName();
         $this->modelInstance = $modelInstance;
         //$this->setFormAttribute("name", $this->modelClassName . "_form"); NO name attribute in 1999 xhtml specs
         $this->setFormAttribute("id", $this->modelClassName . "_id");
 
-        if (!empty($postData)) {
-            if (!empty($fileData)) {
-                $postData = array_merge($postData, $fileData);
-            }
-            parent::__construct($postData);
-        } else if (!is_null($modelInstance)) {
-            parent::__construct($modelInstance->getValues());
-        } else {
-            parent::__construct();
+        if (!is_null($modelInstance)) {
+            $postData = array_merge($modelInstance->getValues(), $postData);
         }
+        $postData = array_merge($postData, $fileData);
+        parent::__construct($postData);
     }
 
     abstract protected function setModelClassName();
@@ -85,6 +80,7 @@ abstract class AbstractModelForm extends AbstractForm {
         else {
             $this->modelInstance->update($this->data);
         }
+        return $this->modelInstance;
     }
 
 }

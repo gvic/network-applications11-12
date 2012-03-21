@@ -45,7 +45,7 @@ function array_to_html_list($arr) {
     return $output;
 }
 
-function print_a(array $ar) {
+function print_a($ar) {
     echo "<pre>";
     print_r($ar);
     echo "</pre>";

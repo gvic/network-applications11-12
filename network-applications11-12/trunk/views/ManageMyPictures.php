@@ -51,7 +51,7 @@ include 'topnav.php';
                     <p><input type="submit" name="update" value="Update" /></p>
                     <p><input type="reset" name="reset" value="Reset" /></p>
                 </form>
-            <?php
+                <?php
             }
             else {
                 echo "You have no pictures so far!";

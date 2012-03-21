@@ -28,6 +28,8 @@ class LoginController extends AbstractController {
                     $id = $user->getValue('id');
                     $this->getModule('Auth')->authenticate(array('user_id'=>$id));
                     $mod->addInfoMessage('You are now logged in.');
+                    $cartMod = $this->getModule('SessionCart');
+                    $cartMod->createCart();
                     return $this->redirectTo('Index',array('Messages'=>$mod->getMessages()));
                 }  catch (NoEntryException $e){
                     $mod->addErrorMessage('Your login or password is wrong.');

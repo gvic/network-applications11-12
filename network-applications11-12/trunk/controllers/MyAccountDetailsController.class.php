@@ -24,8 +24,7 @@ class MyAccountDetailsController extends AbstractController {
                 try {
                     $userForm->save();
                     $mess->addInfoMessage("Your account has been updated.");
-                    return $this->redirectTo("Index", 
-                            array('Messages' => $mess->getMessages()));
+                    $this->d['Messages'] = $mess->getMessages();
                 } catch (DuplicateEntryException $e) {
                     $txt = "An user with the same login or email already exists";
                     $mess->addErrorMessage($txt);

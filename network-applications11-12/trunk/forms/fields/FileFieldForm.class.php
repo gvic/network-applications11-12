@@ -17,10 +17,5 @@ class FileFieldForm extends AbstractFieldForm {
     public function setStaticAttributes() {
         $this->attrs['type'] = 'file';
     }
-    
-    public function setAttributes($fieldObj) {
-        parent::setAttributes($fieldObj);
-        $this->setValue(null);
-    }
 
 }
