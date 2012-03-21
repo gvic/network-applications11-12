@@ -2,7 +2,7 @@
 
 abstract class AbstractForm {
 
-    private $formAttributes = array();
+    protected $formAttributes = array();
 
     /**
      * Associative array storing field label (readable field name to render),
@@ -61,9 +61,9 @@ abstract class AbstractForm {
     }
 
     protected function setFormAttributes() {
-        //$this->formAttributes['accept-charset'] = 'UTF-8';
+        $this->formAttributes['name'] = get_called_class();
+        $this->formAttributes['id'] = get_called_class()."_id";
         $this->formAttributes['action'] = '';
-        //$this->formAttributes['enctype'] = 'text/plain';
         $this->formAttributes['method'] = 'post';
         foreach ($this->formFields as $name => $field) {
             if ($field->getTagType() == "input" &&

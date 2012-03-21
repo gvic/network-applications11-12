@@ -18,7 +18,7 @@ require_once 'controllers/AbstractController.class.php';
 
 // List of the default modules to be load by the abstract controller
 $modules = array(
-	'Messages', 'Auth', //'LastPictures',
+	'Messages', 'Auth', 'SessionCart',//'LastPictures',
 );
 
 // If the parameter c is not defined yet, we set it to point on the IndexController.
