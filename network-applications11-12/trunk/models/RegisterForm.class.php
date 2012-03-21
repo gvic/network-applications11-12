@@ -38,5 +38,13 @@ class RegisterForm extends AbstractModelForm {
         if ($this->data['password'] != $this->data['password_confirmation'])
             throw new Exception("Passwords must match !");
     }
+    
+    public function save($insert = true) {
+        // Security concern: we hash and salt the password 
+        // before saving it in the database
+        $encryptedPass = sha1(PREFIX_SALT.$this->data['password'].SUFFIX_SALT);
+        $this->modelInstance->setFieldValue('password',$encryptedPass);
+        parent::save($insert);
+    }
 
 }

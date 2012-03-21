@@ -18,20 +18,21 @@ class LoginController extends AbstractController {
             if ($loginForm->isValid()) {
                 $post = $this->request['POST'];
                 $userModel = new User();
+                $encryptedPass = sha1(PREFIX_SALT . $post['password'] . SUFFIX_SALT);
                 $criteria = array(
-                'login' => $post['login'],
-                'password' => $post['password']
+                    'login' => $post['login'],
+                    'password' => $encryptedPass
                 );
-                try{
+                try {
                     $mod = $this->getModule('Messages');
                     $user = $userModel->get($criteria);
                     $id = $user->getValue('id');
-                    $this->getModule('Auth')->authenticate(array('user_id'=>$id));
+                    $this->getModule('Auth')->authenticate(array('user_id' => $id));
                     $mod->addInfoMessage('You are now logged in.');
                     $cartMod = $this->getModule('SessionCart');
                     $cartMod->createCart();
-                    return $this->redirectTo('Index',array('Messages'=>$mod->getMessages()));
-                }  catch (NoEntryException $e){
+                    return $this->redirectTo('Index', array('Messages' => $mod->getMessages()));
+                } catch (NoEntryException $e) {
                     $mod->addErrorMessage('Your login or password is wrong.');
                 }
             }
