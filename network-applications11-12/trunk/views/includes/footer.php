@@ -22,6 +22,11 @@
     </div>
 </div>
 <div id="credit">
-    Network Applications - Coursework 2011 / 2012 @ Heriot-Watt University</div>
+    Network Applications - Coursework 2011 / 2012 @ Heriot-Watt University
+    <a target="_blank" href="http://validator.w3.org/check?uri=<?php echo $GLOBALS['fullUrl']; ?>" >
+        <img src="media/images/valid-xhtml10.png" alt="W3CValidation"/>
+    </a>
+</div>
+
 </body>
 </html>
