@@ -61,7 +61,6 @@ abstract class AbstractForm {
     }
 
     protected function setFormAttributes() {
-        $this->formAttributes['name'] = get_called_class();
         $this->formAttributes['id'] = get_called_class()."_id";
         $this->formAttributes['action'] = '';
         $this->formAttributes['method'] = 'post';
