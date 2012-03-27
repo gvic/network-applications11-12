@@ -10,37 +10,22 @@ include 'topnav.php';
             <h2>
                 <?php echo $d['title']; ?>
             </h2>
-            <!---
-            <?php
-            if ($d['form']) {
-                $errors = $d['form']->renderNonFieldsError();
-                if ($errors)
-                    echo '<div class="error">' . $errors . '</div>';
-                echo "<form " . $d['form']->renderFormAttributes() . ">";
-                echo $d['form']->renderAsP();
-                ?>
-                            <input type="submit" value="Upload" />
-                            <input type="reset"  value="Reset" />
-                <?php
-                echo "</form>";
-            }
-            ?>
-            ---->
-            <div id="tabs">
-                <ul>
-                    <li><a href="#photo-1"><span>Select Picture</span></a></li>
-                    <li><a href="#frames-2"><span>Select Frame</span></a></li>
-                    <li><a href="#review-3"><span>Review</span></a></li>
-                </ul>
-                <div id="photo-1">
-                    <form <?php echo $d['form']->renderFormAttributes() ?>>
-                        <p> Selecting photo here to add frame/theme 
-                            graphics.</p>
-                        <br />
-                        <h4>Select photo</h4>
-                        <br />
-
+            <form <?php echo $d['form']->renderFormAttributes() ?>>
+                <div id="tabs">
+                    <ul>
+                        <li><a href="#photo-1"><span>Select Picture</span></a></li>
+                        <li><a href="#frames-2"><span>Select Frame</span></a></li>
+                        <li><a href="#preview-3"><span>Preview</span></a></li>
+                        <li><a href="#review-4"><span>Review</span></a></li>
+                    </ul>
+                    <div id="photo-1">
                         <?php
+                        if (isset($d['photoset_input']))
+                            echo $d['photoset_input'];
+
+                        if (isset($d['photopath_input']))
+                            echo $d['photopath_input'];
+
                         $fileField = $d['form']->getField('media_path');
                         $nonFieldErros = $d['form']->renderNonFieldsError();
                         echo "<p>";
@@ -50,34 +35,103 @@ include 'topnav.php';
                         echo "</p>";
                         echo $fileField->renderField();
                         ?>
-                        <input type="submit" />
-                    </form>
+                    </div>
 
+                    <div id="frames-2">
+                        <ul id='frame_grid'>
+                            <input type='hidden' name='radiovalue' value='' id='radio_selected'></input>
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe1' />
+                                <img class="tip" src="media/images/frameselection/frame1.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe2' />
+                                <img class="tip" src="media/images/frameselection/frame2.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe3' />
+                                <img class="tip" src="media/images/frameselection/frame3.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe4' />
+                                <img class="tip" src="media/images/frameselection/frame4.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe5' />
+                                <img class="tip" src="media/images/frameselection/frame5.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe6' />
+                                <img class="tip" src="media/images/frameselection/frame6.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe7' />
+                                <img class="tip" src="media/images/frameselection/frame7.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe8' />
+                                <img class="tip" src="media/images/frameselection/frame8.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                            <li>
+                                <h4>Test Text!</h4>
+                                <input type='radio' name='radioframe' value='radioframe9' />
+                                <img class="tip" src="media/images/frameselection/frame9.png" width="120" height="79" alt="plau"/>
+                            </li>
+
+                        </ul>
+                        <p style="clear:both;"></p>
+                    </div>
+                    <div id="preview-3">
+                        <p> This part will be a larger form where the user can preview the framed picture by using AJAX (lower quality image).
+
+                            <br />
+
+                            <button type='button' id='previewButton'>Preview!</button>
+                            <br />
+
+                        <div id="previewDiv">
+
+
+
+                        </div>
+
+
+                    </div>
+                    <div id="review-4">
+                        <a id ="link-add" href="">Add to my Shopping Cart</a><br/>
+                        <a id ="link-delete" href="">Delete this preview</a><br/>
+                        <a id ="link-upload" href="index.php?c=Upload">Upload another photo</a><br/>
+                        <a id ="link-see-all" href="index.php?c=ManageMyPictures">See all my pictures</a><br/>
+
+                        <div id="status"></div>
+
+                    </div>
                 </div>
 
-                <div id="frames-2">
-                    <br />
-                    <p> Frame graphics will be displayed here 
-                        in a grid. 
-                        They will be loaded by reading file 
-                        paths (to thumbnail frames) from the database in php to enable dynamically exapsion of selection. </p>
-                </div>
-                <div id="review-3">
-                    <p> This part will be a larger form where 
-                        the user can preview the framed picture by using AJAX (lower quality image), 
-                        set some preferences, and choose to 
-                        add the framed picture to the shopping cart or go to the web page for final ordering details.</p>
 
-                    <br />
-                    <button type='button' 
-                            id='previewButton'>Preview!</button>
-                </div>
-            </div>
 
         </div>
-        <?php include ('sideBox.php'); ?>
-        <div class="clear"></div>
+
     </div>
+    <?php include ('sideBox.php'); ?>
+    <div class="clear"></div>
+</div>
 </div>
 <?php
 include('footer.php');

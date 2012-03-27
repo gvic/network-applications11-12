@@ -7,15 +7,25 @@ class UserPictureForm extends AbstractModelForm {
     public function __construct($postData = array(), $modelInstance = null, $fileData = array()) {
         parent::__construct($postData, $modelInstance, $fileData);
     }
-    
+
+    protected function setFormAttributes() {
+        parent::setFormAttributes();
+        $this->setFormAttribute('id', 'photoform');
+    }
+
     protected function setFieldsAttributes() {
         parent::setFieldsAttributes();
         $this->setFieldAttribute('media_path', 'label', 'File');
         $this->setFieldAttribute('media_path', 'accept', 'image/*');
+        $this->setFieldAttribute('media_path', 'id', 'photofile');
+    }
+
+    protected function setFormFields() {
+        parent::setFormFields();
     }
 
     protected function excludeFields() {
-        $this->exculdeField('user', 'thumbnail_media_path','image_name','private');
+        $this->exculdeField('user', 'thumbnail_media_path', 'image_name', 'private');
     }
 
     protected function setModelClassName() {
@@ -23,11 +33,13 @@ class UserPictureForm extends AbstractModelForm {
     }
 
     protected function validate() {
-        if ($_FILES["media_path"]["type"] != "image/png" && $_FILES["media_path"]["type"] != "image/jpeg"
-                && $_FILES["media_path"]["type"] != "image/pjpeg")
-            throw new Exception("Only png/jpeg/pjpeg are accepted format.");
+        if ($_FILES["media_path"]["type"] != "image/png" &&
+                $_FILES["media_path"]["type"] != "image/jpeg" &&
+                $_FILES["media_path"]["type"] != "image/pjpeg" &&
+                $_FILES["media_path"]["type"] != "image/jpg")
+            throw new Exception("Only png/jpeg/pjpeg/jpg are accepted format.");
 
-        $size = 50000;
+        $size = 400000; //Bytes
         if ($_FILES["media_path"]["size"] > $size)
             throw new Exception("Size file must be under $size bytes.");
 
