@@ -11,13 +11,12 @@ include 'topnav.php';
                 <?php echo $d['title']; ?>
             </h2>
             <?php if ($d['pics']) { ?>
-                <form method="post" id="manageForm" action=".">
+                <form method="post" id="manageForm" action="">
                     <table>
                         <thead>
                             <tr>
                                 <th>Thumbnail</th>
                                 <th>Image Name</th>
-                                <th>Private access</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -30,13 +29,6 @@ include 'topnav.php';
                                 <tr>
                                     <td><?php if ($vals['thumbnail_media_path']) echo $vals['thumbnail_media_path']; ?></td>
                                     <td><?php if ($vals['image_name']) echo $vals['image_name']; ?></td>
-                                    <td><?php
-                        $cked = "";
-                        if ($vals['private'] == "1")
-                            $cked = 'checked="checked"';
-                        echo '<input type="checkbox" name="private_' . $vals['id'] . '" value="' . $vals['id'] . '" ' . $cked . '>';
-                                ?>
-                                    </td>
                                     <td><a href="?c=ManageMyPictures&action=delete&id=<?php echo $vals['id']; ?>">
                                             Delete
                                         </a>

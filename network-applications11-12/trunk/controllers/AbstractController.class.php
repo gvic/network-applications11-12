@@ -177,7 +177,7 @@ abstract class AbstractController {
         if (!array_key_exists("persist", $this->request['SESSION'])) {
             $this->request['SESSION']["persist"] = array();
         }
-        if (!array_key_exists($key, $this->request['SESSION']["persist"])) {
+        if (!in_array($key, $this->request['SESSION']["persist"])) {
             $this->request['SESSION']["persist"][] = $key;
         }
     }

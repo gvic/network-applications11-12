@@ -25,7 +25,7 @@ class UserPictureForm extends AbstractModelForm {
     }
 
     protected function excludeFields() {
-        $this->exculdeField('user', 'thumbnail_media_path', 'image_name', 'private');
+        $this->exculdeField('user', 'thumbnail_media_path');
     }
 
     protected function setModelClassName() {
@@ -39,7 +39,7 @@ class UserPictureForm extends AbstractModelForm {
                 $_FILES["media_path"]["type"] != "image/jpg")
             throw new Exception("Only png/jpeg/pjpeg/jpg are accepted format.");
 
-        $size = 400000; //Bytes
+        $size = 4000000; //Bytes
         if ($_FILES["media_path"]["size"] > $size)
             throw new Exception("Size file must be under $size bytes.");
 

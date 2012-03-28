@@ -11,10 +11,12 @@ include 'topnav.php';
                 <?php echo $d['title']; ?>
             </h2>
             <?php
-            if(isset($d['pics'])){
+            if(!empty($d['pics'])){
                 foreach ($d['pics'] as $pic){
                     echo $pic;
                 }
+            }else{
+                echo "No results found!";
             }
             ?>
 

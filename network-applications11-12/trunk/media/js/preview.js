@@ -11,14 +11,15 @@ $(document).ready(function() {
 function setPreviewClickListener() {
     $('#previewButton').click(function() {
         
-        var name = $('#photo_name').val();
-        
+        var name = $('#filepath_image').val();
+        var imageName = $('input#image_name_id').val();
         var radio = $('input[name=radiovalue]').val();
         
         var fd = new FormData();
         fd.append('frame_name',radio);
-        fd.append("filename", name);
-	
+        fd.append("filepath", name);
+        fd.append("image_name",imageName );
+	console.debug(imageName);
         $.ajax({
             url: "?c=AjaxWSInterface",
             type: "POST",
@@ -28,13 +29,16 @@ function setPreviewClickListener() {
             cache: false,
             success: function (response) {
                 console.debug(response);
-                error = response.error;
+                response = jQuery.parseJSON(response);
+                console.debug(response.error);
+                var error = response.error;
                 $('#previewDiv').empty();
+                console.debug(error);
                 if(error){
                     $('#previewDiv').append(error);
                 }else{
-                    image = response.image;
-                    id_image = response.id_image;
+                    var image = response.image;
+                    var id_image = response.id_image;
                     $('#previewDiv').append("<img src='"+image+"' alt='preview'/>");
                     $('#tabs').tabs("enable", 3);
                     $('#status a#link-delete').attr('href','index.php?c=Upload&action=delete&id='+id_image);

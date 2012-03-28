@@ -76,11 +76,10 @@ abstract class AbstractModelForm extends AbstractForm {
 
     public function save($insert = true) {
         if ($insert)
-            $this->modelInstance->save();
+            return $this->modelInstance->save();
         else {
-            $this->modelInstance->update($this->data);
+            return $this->modelInstance->update($this->data);
         }
-        return $this->modelInstance;
     }
 
 }

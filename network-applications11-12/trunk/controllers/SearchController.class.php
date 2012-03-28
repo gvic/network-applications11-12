@@ -9,7 +9,7 @@ class SearchController extends AbstractController {
             $pics = new UserPicture();
             $cb = new CriteriaBuilder();
             $keywords = $this->request['GET']['keywords'];
-            $cb->where('image_name', ' LIKE ', "%$keywords%")->andWhere('private', '=', 0);
+            $cb->where('image_name', ' LIKE ', "%$keywords%");
             $pics = $pics->find($cb);
             $this->d['pics'] = $pics;
             return $this->renderToTemplate();
