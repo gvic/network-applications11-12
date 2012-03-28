@@ -20,17 +20,28 @@ include 'topnav.php';
                     </ul>
                     <div id="photo-1">
                         <?php
-                        if (isset($d['photoset_input']))
-                            echo $d['photoset_input'];
-
-                        if (isset($d['photopath_input']))
-                            echo $d['photopath_input'];
+                        if (isset($d['photoset_input'])) {
+                            echo '<input type="hidden" name="photoset" value="true" id="hide_uploaded"/>';
+                            echo '<br /><h4>Photo have been selected! Click below if you want to use another photo.</h4><br />';
+                            echo '<input type="hidden" name="photopath" value="' . $d['photopath'] . '" id="filepath_image">';
+                        }else{
+                            echo '<input type="hidden" name="photoset" value="false" id="hide_uploaded"/>';
+                            echo '<br /><h4>Select photo</h4><br />';
+                        }
 
                         $fileField = $d['form']->getField('media_path');
+                        $imageField = $d['form']->getField('image_name');
                         $nonFieldErros = $d['form']->renderNonFieldsError();
                         echo "<p>";
                         if ($nonFieldErros)
                             echo $nonFieldErros . "<br/>";
+
+                        echo $imageField->renderErrors();
+                        echo "</p>";
+                        echo $imageField->renderLabel();
+                        echo "<br/>";
+                        echo $imageField->renderField();
+
                         echo $fileField->renderErrors();
                         echo "</p>";
                         echo $fileField->renderField();

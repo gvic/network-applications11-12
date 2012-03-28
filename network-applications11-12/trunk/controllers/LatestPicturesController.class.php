@@ -2,7 +2,7 @@
 require_once 'models/UserPicture.class.php';
 require_once 'db/CriteriaBuilder.class.php';
 
-class BrowseController extends AbstractController {
+class LatestPicturesController extends AbstractController {
 
     public function action() {
         $userP = new UserPicture();

@@ -23,6 +23,13 @@ class SessionCart extends AbstractModule {
         $this->cart[$key] = $value;
         $this->updateSession();
     }
+    
+    public function removeItem($key){
+        if(array_key_exists($key, $this->cart)){
+            unset($this->cart[$key]);
+        }
+        $this->updateSession();
+    }
 
     protected function updateSession() {
         $this->controller->setSession('CART', $this->cart);

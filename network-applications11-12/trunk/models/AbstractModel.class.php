@@ -217,6 +217,7 @@ abstract class AbstractModel {
             $this->queryBuilder->insert($this->tableName, $this->fieldObjects);
         } else {
             //TODO: a save with insert = false requires update method to be called before...
+            print_a($this->fieldObjects);
             $this->queryBuilder->update($this->tableName, $this->fieldObjects);
         }
         $stat = $this->queryBuilder->getStatment();

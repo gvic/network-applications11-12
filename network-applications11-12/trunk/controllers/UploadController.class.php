@@ -24,30 +24,27 @@ class UploadController extends AbstractController {
         //$userPictureForm->setFormAttribute('action', '?c=Upload');
         $method = $this->request['SERVER']['REQUEST_METHOD'];
         if ($method == "GET") {
-            $t = '<input type="hidden" name="photoset" value="false" id="hide_uploaded"/>';
-            $t .= '<br /><h4>Select photo</h4><br />';
-            $this->d['photoset_input'] = $t;
+            $this->d['photoset_input'] = null;
             $this->d['form'] = new UserPictureForm ();
         } elseif ($method == "POST" && !empty($this->request['FILES'])) {
             $userPictureForm = new UserPictureForm($this->request['POST'], null, $this->request['FILES']);
             if ($userPictureForm->isValid()) {
 
-                $t = '<input type="hidden" name="photoset" value="true" id="hide_uploaded"/>';
-                $t .= '<br /><h4>Photo have been selected! Click below if you want to use another photo.</h4><br />';
-                $this->d['photoset_input'] = $t;
+                $this->d['photoset_input'] = true;
+
+                $imageName = $this->request['POST']['image_name'];
+                $this->d['image_name'] = '<input type="hidden" name="image_name" value="' . $imageName . '" id="image_name_id"/>';
 
                 $file = $this->request['FILES']['media_path'];
+
                 $user = new User();
                 $user->get(array('id' => $this->request['SESSION']['user_id']));
-                $filename = basename($file['name']);
-                $t = '<input type="hidden" name="photopath" value="' . $filename . '" id="photo_name">';
-                $this->d['photopath_input'] = $t;
-                move_uploaded_file($file["tmp_name"], "/tmp/" . $filename);
-            } else {
-                $t = '<input type="hidden" name="photoset" value="false" id="hide_uploaded"/>';
-                $t .= '<br /><h4>Select photo</h4><br />';
-                $this->d['photoset_input'] = $t;
-            }
+                
+                $filepath = "/tmp/" . basename($file['name']);
+                $this->d['photopath'] = $filepath;
+
+                move_uploaded_file($file["tmp_name"], $filepath);
+            } 
             $this->d['form'] = $userPictureForm;
         }
 

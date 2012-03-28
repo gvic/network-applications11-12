@@ -39,7 +39,7 @@
                     <a href="?c=Upload">Start Uploading</a>
                 </li>
                 <li>
-                    <a href="?c=Browse">Browse</a>
+                    <a href="?c=LatestPictures">Latest Pictures</a>
                 </li>
             </ul>
         </div>
