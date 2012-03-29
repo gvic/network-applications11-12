@@ -2,6 +2,7 @@
 
 require_once 'forms/AbstractModelForm.class.php';
 require_once 'forms/fields/PasswordFieldForm.class.php';
+require_once 'forms/fields/BooleanFieldForm.class.php';
 
 class RegisterForm extends AbstractModelForm {
 
@@ -16,8 +17,7 @@ class RegisterForm extends AbstractModelForm {
     }
 
     protected function excludeFields() {
-        $this->exculdeField('validated', 'first_name', 'last_name', 
-                'post_code', 'address', 'city', 'country');
+        $this->exculdeField('first_name', 'last_name', 'post_code', 'address', 'city', 'country');
     }
 
     protected function setFormFields() {
@@ -38,13 +38,31 @@ class RegisterForm extends AbstractModelForm {
         if ($this->data['password'] != $this->data['password_confirmation'])
             throw new Exception("Passwords must match !");
     }
-    
+
     public function save($insert = true) {
         // Security concern: we hash and salt the password 
         // before saving it in the database
-        $encryptedPass = sha1(PREFIX_SALT.$this->data['password'].SUFFIX_SALT);
-        $this->modelInstance->setFieldValue('password',$encryptedPass);
+        $encryptedPass = sha1(PREFIX_SALT . $this->data['password'] . SUFFIX_SALT);
+        $login = $this->data['login'];
+        $dir = ROOT . MEDIA . 'static/' . $login;
+        if (!is_dir($dir))
+            mkdir($dir);
+
+        $htfile = $dir . "/.htaccess";
+        $this->createHtAccess($login, $this->data['password'], $htfile);
+        $this->modelInstance->setFieldValue('password', $encryptedPass);
         parent::save($insert);
+    }
+
+    protected function createHtAccess($login, $password, $location) {
+//        file_put_contents(HTPASSWORD_LOCATION, "\n$login:$password", FILE_APPEND);
+//        $content = '
+//AuthUserFile ' . HTPASSWORD_LOCATION . '
+//AuthGroupFile /dev/null
+//AuthName EnterPassword
+//AuthType Basic
+//require user ' . $login;
+//        file_put_contents($content, $location);
     }
 
 }

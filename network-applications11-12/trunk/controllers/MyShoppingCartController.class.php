@@ -12,19 +12,25 @@ class MyShoppingCartController extends AbstractController {
     protected function action() {
         $mod = $this->getModule('Auth');
         $mod->checkAccess();
-        $cart = $this->getModule('SessionCart');
-        $userPictureModel = new UserPicture();
+        $cartModule = $this->getModule('SessionCart');
+        $userPictureModel = new UserPicture();        
         if (isset($this->request['GET']['action'])) {
             $param = $this->request['GET'];
             if ($param['action'] == 'delete' && isset($param['id'])) {
                 $up = $userPictureModel->get(array('id' => $param['id']));
-                $cart->removeItem($up->getValue('media_path'));
+                $cartModule->removeItem($param['id']);
+            }
+            if ($param['action'] == 'add' && isset($param['id'])) {
+                $cartModule->addItem($param['id'],$param['id']);
             }
         }
-        $this->d['items'] = $this->request['SESSION']['CART'];
+        
+        $cart = $cartModule->getCart();
         $ups = array();
-        foreach ($this->d['items'] as $path => $value) {
-            $ups[$path] = $userPictureModel->get(array('media_path' => $path));
+        foreach ($cart as $id => $idPic) {
+            try{
+                $ups[$id] = $userPictureModel->get(array('id' => $id));
+            }  catch (NoEntryException $e){}
         }
         $this->d['items'] = $ups;
 

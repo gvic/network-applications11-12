@@ -11,11 +11,14 @@ include 'topnav.php';
                 <?php echo $d['title']; ?>
             </h2>
             <?php
-            if(!empty($d['pics'])){
-                foreach ($d['pics'] as $pic){
-                    echo $pic;
+            if (!empty($d['pics'])) {
+                foreach ($d['pics'] as $pic) {
+                    $data = $pic->getValues();
+                    echo '<div class="thumbnail">';
+                    echo '<img width="90" src="' . $data['thumbnail_media_path'] . '" alt="img" />';
+                    echo '<p>' . $data['image_name'] . ' | ' . $data['user'] . '</p></div>';
                 }
-            }else{
+            } else {
                 echo "No results found!";
             }
             ?>

@@ -20,6 +20,7 @@ class SessionCart extends AbstractModule {
     }
 
     public function addItem($key, $value) {
+        $this->createCart();
         $this->cart[$key] = $value;
         $this->updateSession();
     }

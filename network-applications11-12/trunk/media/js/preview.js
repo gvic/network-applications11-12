@@ -28,21 +28,19 @@ function setPreviewClickListener() {
             contentType: false,   // tell jQuery not to set contentType
             cache: false,
             success: function (response) {
-                console.debug(response);
-                response = jQuery.parseJSON(response);
-                console.debug(response.error);
-                var error = response.error;
+                var parsed = jQuery.parseJSON(response);
+                var error = parsed.error;
+                var image = parsed.image;
+                console.debug(parsed);
                 $('#previewDiv').empty();
-                console.debug(error);
                 if(error){
                     $('#previewDiv').append(error);
                 }else{
-                    var image = response.image;
-                    var id_image = response.id_image;
+                    var id = parsed.image_id;
                     $('#previewDiv').append("<img src='"+image+"' alt='preview'/>");
                     $('#tabs').tabs("enable", 3);
-                    $('#status a#link-delete').attr('href','index.php?c=Upload&action=delete&id='+id_image);
-                    $('#status a#link-add').attr('href','index.php?c=MyShoppingCart&action=add&id='+id_image);
+                    $('a#link-delete').attr('href','index.php?c=ManageMyPictures&action=delete&id='+id);
+                    $('a#link-add').attr('href','index.php?c=MyShoppingCart&action=add&id='+id);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown){
