@@ -17,7 +17,7 @@ include 'topnav.php';
                     $data = $pic->getValues();
                 ?>
                 <div class="thumbnail">
-                    <img src="<?php echo $data['thumbnail_media_path']; ?>" alt="thumb">
+                    <img width="90" src="<?php echo $data['thumbnail_media_path']; ?>" alt="thumb">
                     <p>
                         <?php if ($data['image_name']) echo $data['image_name']; ?>
                         | User: <?php echo $data['user']->getValue('login'); ?>

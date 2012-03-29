@@ -1,9 +1,8 @@
 <?php
 
 require_once 'forms/AbstractModelForm.class.php';
-require_once 'forms/fields/PasswordFieldForm.class.php';
 
-class AccountForm extends AbstractModelForm {
+class CheckOutForm extends AbstractModelForm {
 
     protected $formAttributes;
 
@@ -17,12 +16,7 @@ class AccountForm extends AbstractModelForm {
     }
 
     protected function excludeFields() {
-        $this->exculdeField( 'created_at', 'password');
-    }
-
-    protected function setFieldsAttributes() {
-        parent::setFieldsAttributes();
-        $this->setFieldAttribute('login', 'readonly', 'readonly');
+        $this->exculdeField('created_at', 'password', 'login','email');
     }
 
     protected function validate() {

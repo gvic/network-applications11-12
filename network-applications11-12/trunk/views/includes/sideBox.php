@@ -1,11 +1,14 @@
 <div id="highlights">
     <ul>
-        <li>
-            <h3>
-                <a href="index.php?c=MyAccount">Your Account</a>
-            </h3>
-            Your account details
-        </li>
+        <?php if ($d['isAuth']) { ?>
+            <li>
+                <h3>
+                    <a href="index.php?c=MyAccount">Your Account</a>
+                </h3>
+                Your account details
+            </li>
+        <?php } ?>
+
         <?php
         if (isset($d['CART']) && !empty($d['CART'])) {
             ?>
@@ -13,7 +16,7 @@
                 <h3>
                     <a href="index.php?c=MyShoppingCart">My Shopping Cart</a>
                 </h3>
-                Learn more
+                Check out
             </li>
         <?php } ?>
         <li>

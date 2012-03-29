@@ -39,7 +39,7 @@ class UserPictureForm extends AbstractModelForm {
                 $_FILES["media_path"]["type"] != "image/jpg")
             throw new Exception("Only png/jpeg/pjpeg/jpg are accepted format.");
 
-        $size = 4000000; //Bytes
+        $size = 8000000; //Bytes
         if ($_FILES["media_path"]["size"] > $size)
             throw new Exception("Size file must be under $size bytes.");
 

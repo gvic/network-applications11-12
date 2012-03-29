@@ -16,8 +16,8 @@ class RegisterController extends AbstractController {
 
     protected function action() {
         $mod = $this->getModule('Auth');
-        if($mod->isAuth())
-            return $this->redirectTo ('MyAccountDetails');
+        if ($mod->isAuth())
+            return $this->redirectTo('MyAccountDetails');
         $userForm = new RegisterForm($this->request['POST']);
         $this->d['form'] = $userForm;
         if ($this->request['POST']) {
@@ -26,8 +26,7 @@ class RegisterController extends AbstractController {
                 try {
                     $userForm->save();
                     $mess->addInfoMessage("Your account has been created.");
-                    return $this->redirectTo("Index", 
-                            array('Messages' => $mess->getMessages()));
+                    return $this->redirectTo("Index", array('Messages' => $mess->getMessages()));
                 } catch (DuplicateEntryException $e) {
                     $txt = "An user with the same login or email already exists";
                     $mess->addErrorMessage($txt);

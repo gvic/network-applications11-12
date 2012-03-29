@@ -209,7 +209,6 @@ class User extends AbstractModel {
                 "Zambia",
                 "Zimbabwe"
         )),
-        'validated' => array('class' => 'BooleanField', 'default_value' => false),
         'created_at' => array('class' => 'DateField',),
     );
     protected $uniqueness = array('first_name', 'last_name');

@@ -27,7 +27,10 @@ include 'topnav.php';
                                 $vals = $pic->getValues();
                                 ?>
                                 <tr>
-                                    <td><?php if ($vals['thumbnail_media_path']) echo $vals['thumbnail_media_path']; ?></td>
+                                    <td>
+                                        <img src="<?php echo $vals['thumbnail_media_path'] ?>" alt="Thumb"/>
+
+                                    </td>
                                     <td><?php if ($vals['image_name']) echo $vals['image_name']; ?></td>
                                     <td><a href="?c=ManageMyPictures&action=delete&id=<?php echo $vals['id']; ?>">
                                             Delete

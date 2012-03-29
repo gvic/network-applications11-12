@@ -12,11 +12,11 @@ include 'topnav.php';
             </h2>
             <?php if ($d['items']) { ?>
                 <?php
-                foreach ($d['items'] as $imagepath => $pic) {
+                foreach ($d['items'] as $idPic => $pic) {
                     $data = $pic->getValues();
                     ?>
                     <div class="thumbnail">
-                        <img src="<?php echo $data['thumbnail_media_path']; ?>" alt="thumb">
+                        <img width="90" src="<?php echo $data['thumbnail_media_path']; ?>" alt="thumb">
                         <p>
                             <?php if ($data['image_name']) echo $data['image_name']; ?>
                             | <a href="?c=MyShoppingCart&action=delete&id=<?php echo $data['id']; ?>">
@@ -29,6 +29,12 @@ include 'topnav.php';
 
                     <?php
                 }
+                ?>
+            <div style="clear: both" align="center">
+                <a href="?c=CheckOut"><h3>CheckOut</h3></a>
+            </div>
+            <?php
+            
             }
             else {
                 echo "You have no pictures so far!";
