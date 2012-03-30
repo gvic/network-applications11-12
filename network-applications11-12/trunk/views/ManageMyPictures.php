@@ -11,41 +11,39 @@ include 'topnav.php';
                 <?php echo $d['title']; ?>
             </h2>
             <?php if ($d['pics']) { ?>
-                <form method="post" id="manageForm" action="">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Thumbnail</th>
-                                <th>Image Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            <?php
-                            foreach ($d['pics'] as $key => $pic) {
-                                $vals = $pic->getValues();
-                                ?>
-                                <tr>
-                                    <td>
-                                        <img src="<?php echo $vals['thumbnail_media_path'] ?>" alt="Thumb"/>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Thumbnail</th>
+                            <th>Image Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
 
-                                    </td>
-                                    <td><?php if ($vals['image_name']) echo $vals['image_name']; ?></td>
-                                    <td><a href="?c=ManageMyPictures&action=delete&id=<?php echo $vals['id']; ?>">
-                                            Delete
-                                        </a>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
+                    <tbody>
+                        <?php
+                        foreach ($d['pics'] as $key => $pic) {
+                            $vals = $pic->getValues();
                             ?>
-                        </tbody>
-                    </table>
+                            <tr>
+                                <td>
+                                    <img src="<?php echo $vals['thumbnail_media_path'] ?>" alt="Thumb"/>
 
-                    <p><input type="submit" name="update" value="Update" /></p>
-                    <p><input type="reset" name="reset" value="Reset" /></p>
-                </form>
+                                </td>
+                                <td><?php if ($vals['image_name']) echo $vals['image_name']; ?></td>
+                                <td><a href="?c=ManageMyPictures&action=delete&id=<?php echo $vals['id']; ?>">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+
+
                 <?php
             }
             else {

@@ -27,11 +27,12 @@ include 'topnav.php';
                 </td>
                 <td>
                     <a href="?c=LatestPictures"><img alt="Browse" height="45" src="media/images/brow.png" 
-                                             width="211" /></a></td>
+                                                     width="211" /></a></td>
             </tr>
             <tr>
                 <td><strong>
-                        <?php if ($d['isAuth']) {
+                        <?php
+                        if ($d['isAuth']) {
                             echo "Welcome back, upload now!";
                         } else {
                             echo "Sign Up Now!";

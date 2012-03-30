@@ -1,6 +1,4 @@
 <?php
-
-
 // Database informations
 define('DATABASE_HOST', 	'localhost'		);
 //define('DATABASE_HOST', 	'mysql-server-1');
@@ -16,11 +14,9 @@ define('DATABASE_CHARSET',	'latin1'		);
 
 // Root directory where the application is stored.
 define('ROOT',				'/var/www/picup/trunk/');
-
 // Path of the media directory
 //define('MEDIA',				ROOT.'/media');
 define('MEDIA', 'media');
-
 // Extend the include path in order to get
 // rid of the prefix when calling  'include' and 'require' functions
 $conf_path = PATH_SEPARATOR.ROOT.'/conf';
